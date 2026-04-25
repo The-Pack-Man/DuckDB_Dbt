@@ -1,0 +1,11 @@
+
+    
+    
+    truncate table "dev"."main"."customers";
+    -- dbt seed --
+    
+          COPY "dev"."main"."customers" FROM 'C:\Users\ThePa\OneDrive\Documents\DuckDB+Dbt\.claude\worktrees\hardcore-diffie\seeds\customers.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        
+
+;
+  

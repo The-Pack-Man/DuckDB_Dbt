@@ -1,0 +1,21 @@
+customer_id,first_name,last_name,email,city,state,signup_date,segment
+C001,Alice,Johnson,alice.johnson@example.com,New York,NY,2022-03-15,Consumer
+C002,Bob,Smith,bob.smith@example.com,Los Angeles,CA,2022-05-22,Consumer
+C003,Carol,Williams,carol.williams@example.com,Chicago,IL,2022-07-10,Corporate
+C004,David,Brown,david.brown@example.com,Houston,TX,2022-09-01,Consumer
+C005,Eva,Davis,eva.davis@example.com,Phoenix,AZ,2022-11-30,Home Office
+C006,Frank,Miller,frank.miller@example.com,Philadelphia,PA,2023-01-14,Corporate
+C007,Grace,Wilson,grace.wilson@example.com,San Antonio,TX,2023-02-28,Consumer
+C008,Henry,Moore,henry.moore@example.com,San Diego,CA,2023-04-05,Corporate
+C009,Iris,Taylor,iris.taylor@example.com,Dallas,TX,2023-06-18,Home Office
+C010,Jack,Anderson,jack.anderson@example.com,San Jose,CA,2023-08-09,Consumer
+C011,Karen,Thomas,karen.thomas@example.com,Austin,TX,2023-09-22,Corporate
+C012,Leo,Jackson,leo.jackson@example.com,Jacksonville,FL,2023-11-01,Consumer
+C013,Mia,White,mia.white@example.com,Fort Worth,TX,2024-01-07,Home Office
+C014,Noah,Harris,noah.harris@example.com,Columbus,OH,2024-02-14,Consumer
+C015,Olivia,Martin,olivia.martin@example.com,Charlotte,NC,2024-03-25,Corporate
+C016,Paul,Garcia,paul.garcia@example.com,Indianapolis,IN,2024-04-30,Consumer
+C017,Quinn,Martinez,quinn.martinez@example.com,San Francisco,CA,2024-06-11,Corporate
+C018,Rachel,Robinson,rachel.robinson@example.com,Seattle,WA,2024-07-19,Home Office
+C019,Sam,Clark,sam.clark@example.com,Denver,CO,2024-08-08,Consumer
+C020,Tina,Rodriguez,tina.rodriguez@example.com,Nashville,TN,2024-09-15,Corporate

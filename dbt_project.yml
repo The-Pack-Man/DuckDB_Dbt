@@ -1,0 +1,37 @@
+name: 'retail_analytics'
+version: '1.0.0'
+config-version: 2
+
+profile: 'retail_analytics'
+
+model-paths: ["models"]
+seed-paths:  ["seeds"]
+test-paths:  ["tests"]
+macro-paths: ["macros"]
+
+target-path:   "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  retail_analytics:
+    staging:
+      +materialized: view
+      +schema: staging
+    marts:
+      +materialized: table
+
+seeds:
+  retail_analytics:
+    customers:
+      +column_types:
+        signup_date: date
+    orders:
+      +column_types:
+        order_date:   date
+        quantity:     integer
+        unit_price:   double
+        discount_pct: double
+    products:
+      +column_types:
+        cost_price: double
+        list_price: double

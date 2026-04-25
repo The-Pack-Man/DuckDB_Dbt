@@ -1,0 +1,169 @@
+version: "1.0"
+description: >
+  Retail analytics warehouse built on DuckDB via dbt.
+  Contains sales transactions, customer profiles, and a product catalog loaded
+  from CSV seeds. Always query the mart tables (fct_*, dim_*) for analysis;
+  the staging tables (stg_*) in the 'staging' schema are intermediate
+  transformations and should not be used directly in ad-hoc queries.
+
+mart_tables:
+  - name: fct_orders
+    schema: main
+    business_purpose: >
+      Central fact table — one row per order line item (a single product on
+      one order). Use this as the starting point for revenue analysis, order
+      volume trends, discount analysis, and customer purchase history.
+      Join to dim_customers and dim_products for enriched reporting.
+      Filter on status = 'completed' when computing recognised revenue.
+    grain: "One row per order line item (order_id)"
+    useful_for:
+      - "Total revenue by time period, region, or segment"
+      - "Average order value and discount rates"
+      - "Top products by volume or revenue"
+      - "Customer order frequency and recency"
+    columns:
+      - name: order_id
+        type: VARCHAR
+        description: "Unique order identifier — e.g. ORD-0042."
+      - name: order_date
+        type: DATE
+        description: "Date the order was placed (YYYY-MM-DD)."
+      - name: order_month
+        type: DATE
+        description: "First day of the order month — useful for monthly rollups."
+      - name: order_year
+        type: BIGINT
+        description: "Calendar year of the order."
+      - name: customer_id
+        type: VARCHAR
+        description: "FK to dim_customers.customer_id."
+      - name: customer_name
+        type: VARCHAR
+        description: "Full name of the customer who placed the order."
+      - name: customer_segment
+        type: VARCHAR
+        description: "Customer tier: 'Consumer', 'Corporate', or 'Home Office'."
+      - name: customer_city
+        type: VARCHAR
+        description: "City where the customer is located."
+      - name: customer_state
+        type: VARCHAR
+        description: "Two-letter US state abbreviation for the customer."
+      - name: product_id
+        type: VARCHAR
+        description: "FK to dim_products.product_id."
+      - name: product_name
+        type: VARCHAR
+        description: "Display name of the product ordered."
+      - name: product_category
+        type: VARCHAR
+        description: "Top-level category: 'Technology', 'Furniture', or 'Office Supplies'."
+      - name: product_subcategory
+        type: VARCHAR
+        description: "Second-level classification within the category."
+      - name: quantity
+        type: INTEGER
+        description: "Number of units ordered."
+      - name: unit_price
+        type: DOUBLE
+        description: "Per-unit price at time of order (USD)."
+      - name: discount_pct
+        type: DOUBLE
+        description: "Fractional discount — 0.0 = no discount, 0.20 = 20% off."
+      - name: gross_revenue
+        type: DOUBLE
+        description: "quantity × unit_price before discount (USD)."
+      - name: net_revenue
+        type: DOUBLE
+        description: "Actual revenue after discount: quantity × unit_price × (1 − discount_pct) (USD)."
+      - name: status
+        type: VARCHAR
+        description: >
+          Order lifecycle state. Values: 'completed' (revenue recognised),
+          'pending' (awaiting fulfilment), 'cancelled' (no revenue),
+          'returned' (revenue reversed).
+
+  - name: dim_customers
+    schema: main
+    business_purpose: >
+      Customer dimension with profile information and business-segment
+      classification. Use for customer-level aggregations, cohort analysis
+      (signup_date), geographic segmentation (city/state), and segment-based
+      filtering.
+    grain: "One row per customer (customer_id)"
+    useful_for:
+      - "Number of customers per segment or state"
+      - "Customer tenure analysis using signup_date"
+      - "Geographic distribution of customers"
+    columns:
+      - name: customer_id
+        type: VARCHAR
+        description: "Primary key — e.g. C001."
+      - name: full_name
+        type: VARCHAR
+        description: "Customer first name + last name."
+      - name: email
+        type: VARCHAR
+        description: "Contact email (lowercased)."
+      - name: city
+        type: VARCHAR
+        description: "Customer's city."
+      - name: state
+        type: VARCHAR
+        description: "Two-letter US state abbreviation."
+      - name: signup_date
+        type: DATE
+        description: "Date the customer created their account."
+      - name: segment
+        type: VARCHAR
+        description: "Business segment: 'Consumer', 'Corporate', or 'Home Office'."
+      - name: days_since_signup
+        type: INTEGER
+        description: "Days elapsed since signup_date (computed daily)."
+
+  - name: dim_products
+    schema: main
+    business_purpose: >
+      Product catalog with list price, cost, and derived margin metrics.
+      Use margin_pct to identify high-profit items. Category/subcategory
+      provide a two-level hierarchy for drill-down product reporting.
+    grain: "One row per product (product_id)"
+    useful_for:
+      - "Products with highest or lowest margin"
+      - "Revenue contribution by category or subcategory"
+      - "Price vs cost analysis"
+    columns:
+      - name: product_id
+        type: VARCHAR
+        description: "Primary key — e.g. P001."
+      - name: product_name
+        type: VARCHAR
+        description: "Display name of the product."
+      - name: category
+        type: VARCHAR
+        description: "Top-level category: 'Technology', 'Furniture', or 'Office Supplies'."
+      - name: subcategory
+        type: VARCHAR
+        description: "Sub-category within the main category."
+      - name: cost_price
+        type: DOUBLE
+        description: "Internal cost to source/produce the item (USD)."
+      - name: list_price
+        type: DOUBLE
+        description: "Standard selling price before discounts (USD)."
+      - name: gross_margin
+        type: DOUBLE
+        description: "list_price − cost_price (USD)."
+      - name: margin_pct
+        type: DOUBLE
+        description: "Gross margin as % of list_price. Higher = more profitable."
+
+example_questions:
+  - "What is the total net revenue by product category?"
+  - "Which customers have placed the most orders?"
+  - "What is the average discount by customer segment?"
+  - "Show me the top 5 products by revenue in 2024."
+  - "How many orders were returned or cancelled?"
+  - "What is the monthly revenue trend?"
+  - "Which state has the highest number of Corporate customers?"
+  - "What are the highest-margin products we sell?"

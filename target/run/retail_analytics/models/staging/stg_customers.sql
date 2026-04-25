@@ -1,0 +1,23 @@
+
+  
+  create view "dev"."main_staging"."stg_customers__dbt_tmp" as (
+    with source as (
+    select * from "dev"."main"."customers"
+),
+
+renamed as (
+    select
+        customer_id,
+        first_name,
+        last_name,
+        first_name || ' ' || last_name                       as full_name,
+        lower(trim(email))                                   as email,
+        city,
+        state,
+        cast(signup_date as date)                            as signup_date,
+        segment
+    from source
+)
+
+select * from renamed
+  );

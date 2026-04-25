@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Cleaned and renamed customer records from the customers seed."
+    columns:
+      - name: customer_id
+        description: "Unique customer identifier (e.g. C001)."
+        tests:
+          - not_null
+          - unique
+      - name: full_name
+        description: "First and last name concatenated."
+        tests:
+          - not_null
+      - name: email
+        description: "Lowercased contact email address."
+        tests:
+          - not_null
+          - unique
+      - name: segment
+        description: "Customer tier."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Consumer', 'Corporate', 'Home Office']
+
+  - name: stg_products
+    description: "Cleaned product catalog with derived margin fields."
+    columns:
+      - name: product_id
+        description: "Unique product identifier (e.g. P001)."
+        tests:
+          - not_null
+          - unique
+      - name: category
+        description: "Top-level product category."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Technology', 'Furniture', 'Office Supplies']
+
+  - name: stg_orders
+    description: "Cleaned order records with computed gross and net revenue."
+    columns:
+      - name: order_id
+        description: "Unique order identifier (e.g. ORD-0001)."
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: "FK to stg_customers."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: product_id
+        description: "FK to stg_products."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+      - name: status
+        description: "Order lifecycle state."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['completed', 'pending', 'cancelled', 'returned']

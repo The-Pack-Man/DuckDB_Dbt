@@ -1,0 +1,16 @@
+product_id,product_name,category,subcategory,cost_price,list_price
+P001,Wireless Keyboard,Technology,Accessories,25.00,59.99
+P002,USB-C Hub,Technology,Accessories,18.00,44.99
+P003,27-inch Monitor,Technology,Monitors,180.00,399.99
+P004,Laptop Stand,Technology,Accessories,22.00,49.99
+P005,Noise-Cancelling Headphones,Technology,Audio,95.00,249.99
+P006,Ergonomic Office Chair,Furniture,Seating,210.00,499.99
+P007,Standing Desk,Furniture,Desks,320.00,749.99
+P008,Bookshelf,Furniture,Storage,85.00,199.99
+P009,Filing Cabinet,Furniture,Storage,110.00,259.99
+P010,Whiteboard,Furniture,Boards,55.00,129.99
+P011,Sticky Notes 100-pack,Office Supplies,Paper,3.50,8.99
+P012,Ballpoint Pens 12-pack,Office Supplies,Writing,4.00,10.99
+P013,Printer Paper 500-sheets,Office Supplies,Paper,6.50,14.99
+P014,Stapler,Office Supplies,Binding,8.00,19.99
+P015,Desk Organizer,Office Supplies,Organization,12.00,29.99

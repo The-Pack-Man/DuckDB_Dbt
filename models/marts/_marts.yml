@@ -1,0 +1,127 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: >
+      Central fact table containing all sales transactions.
+      Each row represents one order line item (a single product on a single order).
+      Use this table joined with dim_customers and dim_products for revenue analysis,
+      customer purchase history, and product performance reporting.
+    columns:
+      - name: order_id
+        description: "Unique order identifier (e.g. ORD-0042)."
+        tests:
+          - not_null
+          - unique
+      - name: order_date
+        description: "Date the order was placed."
+        tests:
+          - not_null
+      - name: order_month
+        description: "First day of the month in which the order was placed (for time-series rollups)."
+      - name: order_year
+        description: "Calendar year the order was placed."
+      - name: customer_id
+        description: "FK to dim_customers."
+        tests:
+          - not_null
+      - name: customer_name
+        description: "Full name of the purchasing customer."
+      - name: customer_segment
+        description: "Customer tier: Consumer, Corporate, or Home Office."
+      - name: customer_city
+        description: "Customer's city of residence."
+      - name: customer_state
+        description: "Customer's US state (two-letter abbreviation)."
+      - name: product_id
+        description: "FK to dim_products."
+        tests:
+          - not_null
+      - name: product_name
+        description: "Display name of the product ordered."
+      - name: product_category
+        description: "Top-level product category: Technology, Furniture, or Office Supplies."
+      - name: product_subcategory
+        description: "Second-level product classification within its category."
+      - name: quantity
+        description: "Number of units ordered."
+      - name: unit_price
+        description: "Price per unit at the time of the order (USD)."
+      - name: discount_pct
+        description: "Fractional discount applied: 0.0 = no discount, 0.20 = 20% off."
+      - name: gross_revenue
+        description: "quantity × unit_price before any discount (USD)."
+      - name: net_revenue
+        description: "Actual revenue collected after discount: quantity × unit_price × (1 − discount_pct) (USD)."
+      - name: status
+        description: "Order lifecycle state: completed, pending, cancelled, or returned."
+        tests:
+          - accepted_values:
+              values: ['completed', 'pending', 'cancelled', 'returned']
+
+  - name: dim_customers
+    description: >
+      Customer dimension with profile information and segment classification.
+      Segment drives pricing and support tiers.
+      Use signup_date / days_since_signup for cohort and tenure analysis.
+    columns:
+      - name: customer_id
+        description: "Primary key (e.g. C001)."
+        tests:
+          - not_null
+          - unique
+      - name: full_name
+        description: "Customer's first and last name concatenated."
+        tests:
+          - not_null
+      - name: email
+        description: "Contact email address (lowercased)."
+        tests:
+          - not_null
+          - unique
+      - name: city
+        description: "Customer's city of residence."
+      - name: state
+        description: "Two-letter US state abbreviation."
+      - name: signup_date
+        description: "Date the customer created their account."
+      - name: segment
+        description: "Customer tier: Consumer, Corporate, or Home Office."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Consumer', 'Corporate', 'Home Office']
+      - name: days_since_signup
+        description: "Number of days from signup_date to today (higher = longer-tenured customer)."
+
+  - name: dim_products
+    description: >
+      Product catalog with pricing and margin data.
+      Use margin_pct to identify high-profit products for promotion analysis.
+      Category and subcategory provide a two-level hierarchy for drill-down reporting.
+    columns:
+      - name: product_id
+        description: "Primary key (e.g. P001)."
+        tests:
+          - not_null
+          - unique
+      - name: product_name
+        description: "Display name of the product."
+        tests:
+          - not_null
+      - name: category
+        description: "Top-level category: Technology, Furniture, or Office Supplies."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Technology', 'Furniture', 'Office Supplies']
+      - name: subcategory
+        description: "Second-level classification within the category."
+      - name: cost_price
+        description: "Internal cost to acquire or produce the product (USD)."
+      - name: list_price
+        description: "Standard selling price before any discount (USD)."
+      - name: gross_margin
+        description: "list_price − cost_price (USD)."
+      - name: margin_pct
+        description: "Gross margin as a percentage of list_price. Higher is more profitable."
