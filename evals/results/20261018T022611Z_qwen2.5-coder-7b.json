@@ -1,0 +1,6009 @@
+{
+  "created_at": "2026-10-18T02:26:11.243112+00:00",
+  "generator": "ollama",
+  "model": "qwen2.5-coder:7b",
+  "params": {
+    "temperature": 0.0,
+    "max_retries": 2,
+    "repeats": 3,
+    "conditions": [
+      "schema_only",
+      "with_manifest"
+    ],
+    "golden": "golden.yaml",
+    "n_questions": 32
+  },
+  "duration_s": 115.9,
+  "summary": {
+    "schema_only": {
+      "accuracy": 0.5625,
+      "accuracy_stdev": 0.0,
+      "repeats": 3,
+      "n_questions": 32,
+      "execution_rate": 1.0,
+      "repair_rate": 0.0312,
+      "by_tag": {
+        "basic": {
+          "accuracy": 0.8462,
+          "n": 39
+        },
+        "business_rule": {
+          "accuracy": 0.1538,
+          "n": 39
+        },
+        "join": {
+          "accuracy": 0.5,
+          "n": 6
+        },
+        "ranking": {
+          "accuracy": 0.7143,
+          "n": 21
+        },
+        "time": {
+          "accuracy": 0.7143,
+          "n": 21
+        }
+      },
+      "median_latency_s": 0.336
+    },
+    "with_manifest": {
+      "accuracy": 0.9062,
+      "accuracy_stdev": 0.0,
+      "repeats": 3,
+      "n_questions": 32,
+      "execution_rate": 1.0,
+      "repair_rate": 0.0312,
+      "by_tag": {
+        "basic": {
+          "accuracy": 1.0,
+          "n": 39
+        },
+        "business_rule": {
+          "accuracy": 0.9231,
+          "n": 39
+        },
+        "join": {
+          "accuracy": 0.5,
+          "n": 6
+        },
+        "ranking": {
+          "accuracy": 1.0,
+          "n": 21
+        },
+        "time": {
+          "accuracy": 0.8571,
+          "n": 21
+        }
+      },
+      "median_latency_s": 0.375
+    },
+    "manifest_lift": 0.3437
+  },
+  "rows": [
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q01",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers do we have?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS total_customers FROM customers;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS total_customers FROM customers;"
+      ],
+      "latency_s": 21.016,
+      "result_preview": [
+        [
+          "20"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q02",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in the catalog?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_products FROM products;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_products FROM products;"
+      ],
+      "latency_s": 4.828,
+      "result_preview": [
+        [
+          "15"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q03",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many order lines are there in total, across all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_order_lines\nFROM orders;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_order_lines\nFROM orders;"
+      ],
+      "latency_s": 0.172,
+      "result_preview": [
+        [
+          "80"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q04",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers are in each segment?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;",
+      "sql_history": [
+        "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;"
+      ],
+      "latency_s": 0.25,
+      "result_preview": [
+        [
+          "Consumer",
+          "9"
+        ],
+        [
+          "Home Office",
+          "4"
+        ],
+        [
+          "Corporate",
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q05",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT category, COUNT(*) AS product_count\nFROM dim_products\nGROUP BY category;",
+      "sql_history": [
+        "SELECT category, COUNT(*) AS product_count\nFROM dim_products\nGROUP BY category;"
+      ],
+      "latency_s": 0.219,
+      "result_preview": [
+        [
+          "Furniture",
+          "5"
+        ],
+        [
+          "Technology",
+          "5"
+        ],
+        [
+          "Office Supplies",
+          "5"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q06",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders are there in each status?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT status, COUNT(order_id) AS order_count\nFROM fct_orders\nGROUP BY status;",
+      "sql_history": [
+        "SELECT status, COUNT(order_id) AS order_count\nFROM fct_orders\nGROUP BY status;"
+      ],
+      "latency_s": 0.25,
+      "result_preview": [
+        [
+          "returned",
+          "4"
+        ],
+        [
+          "completed",
+          "69"
+        ],
+        [
+          "pending",
+          "3"
+        ],
+        [
+          "cancelled",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q07",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which state has the most customers?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT state \nFROM customers \nGROUP BY state \nORDER BY COUNT(customer_id) DESC \nLIMIT 1;",
+      "sql_history": [
+        "SELECT state \nFROM customers \nGROUP BY state \nORDER BY COUNT(customer_id) DESC \nLIMIT 1;"
+      ],
+      "latency_s": 0.265,
+      "result_preview": [
+        [
+          "TX"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q08",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders were returned or cancelled?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS total_orders_returned_cancelled\nFROM fct_orders\nWHERE status IN ('Returned', 'Cancelled');",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS total_orders_returned_cancelled\nFROM fct_orders\nWHERE status IN ('Returned', 'Cancelled');"
+      ],
+      "latency_s": 0.313,
+      "result_preview": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q09",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average list price of products in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    category, \n    ROUND(AVG(list_price), 2) AS avg_list_price\nFROM \n    dim_products\nGROUP BY \n    category;",
+      "sql_history": [
+        "SELECT \n    category, \n    ROUND(AVG(list_price), 2) AS avg_list_price\nFROM \n    dim_products\nGROUP BY \n    category;"
+      ],
+      "latency_s": 4.89,
+      "result_preview": [
+        [
+          "Technology",
+          "160.99"
+        ],
+        [
+          "Office Supplies",
+          "16.99"
+        ],
+        [
+          "Furniture",
+          "367.99"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q10",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which product has the highest margin percentage?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT product_name, margin_pct\nFROM dim_products\nORDER BY margin_pct DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT product_name, margin_pct\nFROM dim_products\nORDER BY margin_pct DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.266,
+      "result_preview": [
+        [
+          "Ballpoint Pens 12-pack",
+          "63.6"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q11",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average discount on orders for each customer segment, across all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    customer_segment,\n    ROUND(AVG(discount_pct), 2) AS avg_discount_pct\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;",
+      "sql_history": [
+        "SELECT \n    customer_segment,\n    ROUND(AVG(discount_pct), 2) AS avg_discount_pct\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;"
+      ],
+      "latency_s": 0.359,
+      "result_preview": [
+        [
+          "Home Office",
+          "0.05"
+        ],
+        [
+          "Corporate",
+          "0.06"
+        ],
+        [
+          "Consumer",
+          "0.06"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q12",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many units were ordered in each product category, counting all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;"
+      ],
+      "latency_s": 0.438,
+      "result_preview": [
+        [
+          "Furniture",
+          "35"
+        ],
+        [
+          "Office Supplies",
+          "124"
+        ],
+        [
+          "Technology",
+          "47"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q13",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;"
+      ],
+      "latency_s": 0.281,
+      "result_preview": [
+        [
+          "34"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q14",
+      "tags": [
+        "time"
+      ],
+      "question": "How many customers signed up in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;"
+      ],
+      "latency_s": 0.313,
+      "result_preview": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q15",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in each month of 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    COUNT(order_id) AS number_of_orders\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2023\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    COUNT(order_id) AS number_of_orders\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2023\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.515,
+      "result_preview": [
+        [
+          "2023-01-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-02-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-03-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-04-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-05-01 00:00:00",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q16",
+      "tags": [
+        "join",
+        "time"
+      ],
+      "question": "Which customers placed no orders in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT c.customer_id, c.first_name, c.last_name, c.email, c.city, c.state, c.signup_date, c.segment\nFROM customers c\nWHERE NOT EXISTS (\n    SELECT 1\n    FROM orders o\n    WHERE o.customer_id = c.customer_id AND YEAR(o.order_date) = 2023\n);",
+      "sql_history": [
+        "SELECT c.customer_id, c.first_name, c.last_name, c.email, c.city, c.state, c.signup_date, c.segment\nFROM customers c\nWHERE NOT EXISTS (\n    SELECT 1\n    FROM orders o\n    WHERE o.customer_id = c.customer_id AND YEAR(o.order_date) = 2023\n);"
+      ],
+      "latency_s": 0.625,
+      "result_preview": [
+        [
+          "C015",
+          "Olivia",
+          "Martin",
+          "olivia.martin@example.com",
+          "Charlotte",
+          "NC",
+          "2024-03-25",
+          "Corporate"
+        ],
+        [
+          "C016",
+          "Paul",
+          "Garcia",
+          "paul.garcia@example.com",
+          "Indianapolis",
+          "IN",
+          "2024-04-30",
+          "Consumer"
+        ],
+        [
+          "C017",
+          "Quinn",
+          "Martinez",
+          "quinn.martinez@example.com",
+          "San Francisco",
+          "CA",
+          "2024-06-11",
+          "Corporate"
+        ],
+        [
+          "C018",
+          "Rachel",
+          "Robinson",
+          "rachel.robinson@example.com",
+          "Seattle",
+          "WA",
+          "2024-07-19",
+          "Home Office"
+        ],
+        [
+          "C019",
+          "Sam",
+          "Clark",
+          "sam.clark@example.com",
+          "Denver",
+          "CO",
+          "2024-08-08",
+          "Consumer"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q17",
+      "tags": [
+        "join"
+      ],
+      "question": "Which products have never been returned?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT product_id, product_name \nFROM products\nWHERE product_id NOT IN (\n    SELECT product_id \n    FROM fct_orders \n    WHERE status = 'Returned'\n);",
+      "sql_history": [
+        "SELECT product_id, product_name \nFROM products\nWHERE product_id NOT IN (\n    SELECT product_id \n    FROM fct_orders \n    WHERE status = 'Returned'\n);"
+      ],
+      "latency_s": 0.375,
+      "result_preview": [
+        [
+          "P001",
+          "Wireless Keyboard"
+        ],
+        [
+          "P002",
+          "USB-C Hub"
+        ],
+        [
+          "P003",
+          "27-inch Monitor"
+        ],
+        [
+          "P004",
+          "Laptop Stand"
+        ],
+        [
+          "P005",
+          "Noise-Cancelling Headphones"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q18",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many different customers have at least one completed order?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_completed_orders\nFROM fct_orders\nWHERE status = 'Completed';",
+      "sql_history": [
+        "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_completed_orders\nFROM fct_orders\nWHERE status = 'Completed';"
+      ],
+      "latency_s": 0.313,
+      "result_preview": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q19",
+      "tags": [
+        "ranking"
+      ],
+      "question": "Which customer has placed the most orders, counting all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    c.customer_id,\n    c.first_name,\n    c.last_name,\n    COUNT(o.order_id) AS total_orders\nFROM \n    customers c\nJOIN \n    orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.first_name, c.last_name\nORDER BY \n    total_orders DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    c.customer_id,\n    c.first_name,\n    c.last_name,\n    COUNT(o.order_id) AS total_orders\nFROM \n    customers c\nJOIN \n    orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.first_name, c.last_name\nORDER BY \n    total_orders DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.656,
+      "result_preview": [
+        [
+          "C001",
+          "Alice",
+          "Johnson",
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q20",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is our total revenue?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM fct_orders;",
+      "sql_history": [
+        "SELECT ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM fct_orders;"
+      ],
+      "latency_s": 0.266,
+      "result_preview": [
+        [
+          "19234.44"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q21",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is total revenue by product category?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;"
+      ],
+      "latency_s": 0.515,
+      "result_preview": [
+        [
+          "Furniture",
+          "11680.649999999994"
+        ],
+        [
+          "Technology",
+          "5660.529999999998"
+        ],
+        [
+          "Office Supplies",
+          "1893.2600000000004"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q22",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which product category generates the most revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    product_category, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    product_category\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    product_category, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    product_category\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.453,
+      "result_preview": [
+        [
+          "Furniture",
+          "11680.649999999994"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q23",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was our revenue in 2024?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE order_year = 2024;",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE order_year = 2024;"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "8432.169999999996"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q24",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was revenue by month in 2024?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2024\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2024\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.563,
+      "result_preview": [
+        [
+          "2024-01-01 00:00:00",
+          "887.34"
+        ],
+        [
+          "2024-02-01 00:00:00",
+          "506.97"
+        ],
+        [
+          "2024-03-01 00:00:00",
+          "671.9"
+        ],
+        [
+          "2024-04-01 00:00:00",
+          "879.96"
+        ],
+        [
+          "2024-05-01 00:00:00",
+          "589.93"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q25",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Who are our top 5 customers by revenue?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    c.customer_id,\n    c.full_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;",
+      "sql_history": [
+        "SELECT \n    c.customer_id,\n    c.full_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;"
+      ],
+      "latency_s": 0.656,
+      "result_preview": [
+        [
+          "C003",
+          "Carol Williams",
+          "1648.5600000000002"
+        ],
+        [
+          "C006",
+          "Frank Miller",
+          "1578.1200000000001"
+        ],
+        [
+          "C004",
+          "David Brown",
+          "1438.8500000000001"
+        ],
+        [
+          "C001",
+          "Alice Johnson",
+          "1331.82"
+        ],
+        [
+          "C012",
+          "Leo Jackson",
+          "1301.89"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q26",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is revenue by customer segment?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    customer_segment, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;",
+      "sql_history": [
+        "SELECT \n    customer_segment, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;"
+      ],
+      "latency_s": 0.328,
+      "result_preview": [
+        [
+          "Home Office",
+          "2945.94"
+        ],
+        [
+          "Corporate",
+          "7185.359999999999"
+        ],
+        [
+          "Consumer",
+          "9103.139999999996"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q27",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is the average revenue per order?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders;",
+      "sql_history": [
+        "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders;"
+      ],
+      "latency_s": 0.234,
+      "result_preview": [
+        [
+          "240.4305"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q28",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue did we give up to discounts?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(discount_pct * unit_price * quantity) AS total_discount_revenue\nFROM fct_orders;",
+      "sql_history": [
+        "SELECT SUM(discount_pct * unit_price * quantity) AS total_discount_revenue\nFROM fct_orders;"
+      ],
+      "latency_s": 0.266,
+      "result_preview": [
+        [
+          "2272.4384999999997"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q29",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue was reversed by returns?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'Returned';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'Returned';"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "None"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q30",
+      "tags": [
+        "business_rule",
+        "ranking",
+        "time"
+      ],
+      "question": "Which product generated the most revenue in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nWHERE \n    YEAR(o.order_date) = 2023\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nWHERE \n    YEAR(o.order_date) = 2023\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.703,
+      "result_preview": [
+        [
+          "Standing Desk",
+          "2399.96"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q31",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which 3 states bring in the most revenue?",
+      "correct": false,
+      "executed": true,
+      "attempts": 2,
+      "repaired": true,
+      "error": null,
+      "sql": "SELECT \n    customer_state AS state, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_state\nORDER BY \n    total_revenue DESC\nLIMIT 3;",
+      "sql_history": [
+        "SELECT \n    state, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    state\nORDER BY \n    total_revenue DESC\nLIMIT 3;",
+        "SELECT \n    customer_state AS state, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_state\nORDER BY \n    total_revenue DESC\nLIMIT 3;"
+      ],
+      "latency_s": 0.938,
+      "result_preview": [
+        [
+          "TX",
+          "4795.25"
+        ],
+        [
+          "CA",
+          "3615.0299999999993"
+        ],
+        [
+          "IL",
+          "1648.5600000000002"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "schema_only",
+      "id": "q32",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What percentage of revenue comes from Corporate customers? Round to one decimal place.",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM \n    dim_customers AS T1\nJOIN \n    fct_orders AS T2 ON T1.customer_id = T2.customer_id;",
+      "sql_history": [
+        "SELECT \n    ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM \n    dim_customers AS T1\nJOIN \n    fct_orders AS T2 ON T1.customer_id = T2.customer_id;"
+      ],
+      "latency_s": 0.718,
+      "result_preview": [
+        [
+          "37.4"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q01",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers do we have?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS total_customers FROM dim_customers;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS total_customers FROM dim_customers;"
+      ],
+      "latency_s": 0.391,
+      "result_preview": [
+        [
+          "20"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q02",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in the catalog?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_products FROM dim_products;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_products FROM dim_products;"
+      ],
+      "latency_s": 0.187,
+      "result_preview": [
+        [
+          "15"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q03",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many order lines are there in total, across all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_order_lines FROM fct_orders;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_order_lines FROM fct_orders;"
+      ],
+      "latency_s": 0.204,
+      "result_preview": [
+        [
+          "80"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q04",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers are in each segment?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;",
+      "sql_history": [
+        "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;"
+      ],
+      "latency_s": 0.265,
+      "result_preview": [
+        [
+          "Corporate",
+          "7"
+        ],
+        [
+          "Consumer",
+          "9"
+        ],
+        [
+          "Home Office",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q05",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    category, \n    COUNT(product_id) AS product_count\nFROM \n    dim_products\nGROUP BY \n    category;",
+      "sql_history": [
+        "SELECT \n    category, \n    COUNT(product_id) AS product_count\nFROM \n    dim_products\nGROUP BY \n    category;"
+      ],
+      "latency_s": 0.328,
+      "result_preview": [
+        [
+          "Office Supplies",
+          "5"
+        ],
+        [
+          "Furniture",
+          "5"
+        ],
+        [
+          "Technology",
+          "5"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q06",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders are there in each status?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    status, \n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nGROUP BY \n    status;",
+      "sql_history": [
+        "SELECT \n    status, \n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nGROUP BY \n    status;"
+      ],
+      "latency_s": 0.344,
+      "result_preview": [
+        [
+          "returned",
+          "4"
+        ],
+        [
+          "completed",
+          "69"
+        ],
+        [
+          "pending",
+          "3"
+        ],
+        [
+          "cancelled",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q07",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which state has the most customers?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT state, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY state\nORDER BY customer_count DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT state, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY state\nORDER BY customer_count DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.359,
+      "result_preview": [
+        [
+          "TX",
+          "5"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q08",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders were returned or cancelled?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS order_count\nFROM fct_orders\nWHERE status IN ('returned', 'cancelled');",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS order_count\nFROM fct_orders\nWHERE status IN ('returned', 'cancelled');"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "8"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q09",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average list price of products in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    ROUND(AVG(p.list_price), 2) AS avg_list_price\nFROM \n    dim_products p\nGROUP BY \n    p.category;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    ROUND(AVG(p.list_price), 2) AS avg_list_price\nFROM \n    dim_products p\nGROUP BY \n    p.category;"
+      ],
+      "latency_s": 0.407,
+      "result_preview": [
+        [
+          "Furniture",
+          "367.99"
+        ],
+        [
+          "Office Supplies",
+          "16.99"
+        ],
+        [
+          "Technology",
+          "160.99"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q10",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which product has the highest margin percentage?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT p.product_name, p.margin_pct\nFROM dim_products p\nORDER BY p.margin_pct DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT p.product_name, p.margin_pct\nFROM dim_products p\nORDER BY p.margin_pct DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.312,
+      "result_preview": [
+        [
+          "Ballpoint Pens 12-pack",
+          "63.6"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q11",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average discount on orders for each customer segment, across all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    dim_customers.segment,\n    AVG(fct_orders.discount_pct) AS avg_discount_pct\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nGROUP BY \n    dim_customers.segment;",
+      "sql_history": [
+        "SELECT \n    dim_customers.segment,\n    AVG(fct_orders.discount_pct) AS avg_discount_pct\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nGROUP BY \n    dim_customers.segment;"
+      ],
+      "latency_s": 0.563,
+      "result_preview": [
+        [
+          "Home Office",
+          "0.05333333333333334"
+        ],
+        [
+          "Consumer",
+          "0.05500000000000001"
+        ],
+        [
+          "Corporate",
+          "0.064"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q12",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many units were ordered in each product category, counting all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;"
+      ],
+      "latency_s": 0.484,
+      "result_preview": [
+        [
+          "Technology",
+          "47"
+        ],
+        [
+          "Furniture",
+          "35"
+        ],
+        [
+          "Office Supplies",
+          "124"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q13",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "34"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q14",
+      "tags": [
+        "time"
+      ],
+      "question": "How many customers signed up in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;"
+      ],
+      "latency_s": 0.344,
+      "result_preview": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q15",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in each month of 2023?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nWHERE \n    order_year = 2023 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nWHERE \n    order_year = 2023 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.531,
+      "result_preview": [
+        [
+          "2023-01-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-02-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-03-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-04-01 00:00:00",
+          "3"
+        ],
+        [
+          "2023-05-01 00:00:00",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q16",
+      "tags": [
+        "join",
+        "time"
+      ],
+      "question": "Which customers placed no orders in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT dc.customer_id, dc.full_name, dc.email, dc.city, dc.state, dc.signup_date, dc.segment\nFROM dim_customers dc\nWHERE dc.customer_id NOT IN (\n    SELECT fco.customer_id\n    FROM fct_orders fco\n    WHERE YEAR(fco.order_date) = 2023 AND fco.status = 'completed'\n);",
+      "sql_history": [
+        "SELECT dc.customer_id, dc.full_name, dc.email, dc.city, dc.state, dc.signup_date, dc.segment\nFROM dim_customers dc\nWHERE dc.customer_id NOT IN (\n    SELECT fco.customer_id\n    FROM fct_orders fco\n    WHERE YEAR(fco.order_date) = 2023 AND fco.status = 'completed'\n);"
+      ],
+      "latency_s": 0.703,
+      "result_preview": [
+        [
+          "C015",
+          "Olivia Martin",
+          "olivia.martin@example.com",
+          "Charlotte",
+          "NC",
+          "2024-03-25",
+          "Corporate"
+        ],
+        [
+          "C016",
+          "Paul Garcia",
+          "paul.garcia@example.com",
+          "Indianapolis",
+          "IN",
+          "2024-04-30",
+          "Consumer"
+        ],
+        [
+          "C017",
+          "Quinn Martinez",
+          "quinn.martinez@example.com",
+          "San Francisco",
+          "CA",
+          "2024-06-11",
+          "Corporate"
+        ],
+        [
+          "C018",
+          "Rachel Robinson",
+          "rachel.robinson@example.com",
+          "Seattle",
+          "WA",
+          "2024-07-19",
+          "Home Office"
+        ],
+        [
+          "C019",
+          "Sam Clark",
+          "sam.clark@example.com",
+          "Denver",
+          "CO",
+          "2024-08-08",
+          "Consumer"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q17",
+      "tags": [
+        "join"
+      ],
+      "question": "Which products have never been returned?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT p.product_id, p.product_name\nFROM dim_products p\nJOIN fct_orders o ON p.product_id = o.product_id\nWHERE o.status != 'returned';",
+      "sql_history": [
+        "SELECT p.product_id, p.product_name\nFROM dim_products p\nJOIN fct_orders o ON p.product_id = o.product_id\nWHERE o.status != 'returned';"
+      ],
+      "latency_s": 0.391,
+      "result_preview": [
+        [
+          "P001",
+          "Wireless Keyboard"
+        ],
+        [
+          "P002",
+          "USB-C Hub"
+        ],
+        [
+          "P003",
+          "27-inch Monitor"
+        ],
+        [
+          "P004",
+          "Laptop Stand"
+        ],
+        [
+          "P005",
+          "Noise-Cancelling Headphones"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q18",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many different customers have at least one completed order?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_orders\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_orders\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.312,
+      "result_preview": [
+        [
+          "20"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q19",
+      "tags": [
+        "ranking"
+      ],
+      "question": "Which customer has placed the most orders, counting all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    c.customer_id,\n    c.full_name,\n    COUNT(o.order_id) AS order_count\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    order_count DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    c.customer_id,\n    c.full_name,\n    COUNT(o.order_id) AS order_count\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    order_count DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.656,
+      "result_preview": [
+        [
+          "C001",
+          "Alice Johnson",
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q20",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is our total revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.282,
+      "result_preview": [
+        [
+          "15905.07999999999"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q21",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is total revenue by product category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;"
+      ],
+      "latency_s": 0.64,
+      "result_preview": [
+        [
+          "Furniture",
+          "9713.699999999995"
+        ],
+        [
+          "Technology",
+          "4418.079999999999"
+        ],
+        [
+          "Office Supplies",
+          "1773.3000000000004"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q22",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which product category generates the most revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.672,
+      "result_preview": [
+        [
+          "Furniture",
+          "9713.699999999995"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q23",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was our revenue in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE order_year = 2024 AND status = 'completed';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE order_year = 2024 AND status = 'completed';"
+      ],
+      "latency_s": 0.375,
+      "result_preview": [
+        [
+          "5847.739999999997"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q24",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was revenue by month in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    SUM(net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nWHERE \n    order_year = 2024 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    SUM(net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nWHERE \n    order_year = 2024 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.578,
+      "result_preview": [
+        [
+          "2024-01-01 00:00:00",
+          "389.86"
+        ],
+        [
+          "2024-02-01 00:00:00",
+          "506.97"
+        ],
+        [
+          "2024-03-01 00:00:00",
+          "671.9"
+        ],
+        [
+          "2024-04-01 00:00:00",
+          "279.97"
+        ],
+        [
+          "2024-05-01 00:00:00",
+          "589.9300000000001"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q25",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Who are our top 5 customers by revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    d.customer_id,\n    d.full_name,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.customer_id, d.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;",
+      "sql_history": [
+        "SELECT \n    d.customer_id,\n    d.full_name,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.customer_id, d.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;"
+      ],
+      "latency_s": 0.766,
+      "result_preview": [
+        [
+          "C006",
+          "Frank Miller",
+          "1578.1200000000001"
+        ],
+        [
+          "C004",
+          "David Brown",
+          "1438.8500000000001"
+        ],
+        [
+          "C003",
+          "Carol Williams",
+          "1411.07"
+        ],
+        [
+          "C012",
+          "Leo Jackson",
+          "1301.8899999999999"
+        ],
+        [
+          "C002",
+          "Bob Smith",
+          "1256.3400000000001"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q26",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is revenue by customer segment?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    dim_customers.segment,\n    SUM(fct_orders.net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nWHERE \n    fct_orders.status = 'completed'\nGROUP BY \n    dim_customers.segment\nORDER BY \n    total_net_revenue DESC;",
+      "sql_history": [
+        "SELECT \n    dim_customers.segment,\n    SUM(fct_orders.net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nWHERE \n    fct_orders.status = 'completed'\nGROUP BY \n    dim_customers.segment\nORDER BY \n    total_net_revenue DESC;"
+      ],
+      "latency_s": 0.75,
+      "result_preview": [
+        [
+          "Consumer",
+          "7483.219999999997"
+        ],
+        [
+          "Corporate",
+          "6360.889999999999"
+        ],
+        [
+          "Home Office",
+          "2060.9700000000003"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q27",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is the average revenue per order?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "230.50840579710132"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q28",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue did we give up to discounts?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue * discount_pct) AS total_discounted_revenue\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT SUM(net_revenue * discount_pct) AS total_discounted_revenue\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.328,
+      "result_preview": [
+        [
+          "1562.4465000000005"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q29",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue was reversed by returns?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'returned';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'returned';"
+      ],
+      "latency_s": 0.312,
+      "result_preview": [
+        [
+          "1062.46"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q30",
+      "tags": [
+        "business_rule",
+        "ranking",
+        "time"
+      ],
+      "question": "Which product generated the most revenue in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.order_year = 2023 AND o.status = 'completed'\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.order_year = 2023 AND o.status = 'completed'\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.766,
+      "result_preview": [
+        [
+          "Standing Desk",
+          "2399.96"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q31",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which 3 states bring in the most revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    d.state,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.state\nORDER BY \n    total_revenue DESC\nLIMIT 3;",
+      "sql_history": [
+        "SELECT \n    d.state,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.state\nORDER BY \n    total_revenue DESC\nLIMIT 3;"
+      ],
+      "latency_s": 0.687,
+      "result_preview": [
+        [
+          "TX",
+          "3970.2799999999997"
+        ],
+        [
+          "CA",
+          "3368.04"
+        ],
+        [
+          "PA",
+          "1578.1200000000001"
+        ]
+      ]
+    },
+    {
+      "repeat": 1,
+      "condition": "with_manifest",
+      "id": "q32",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What percentage of revenue comes from Corporate customers? Round to one decimal place.",
+      "correct": true,
+      "executed": true,
+      "attempts": 2,
+      "repaired": true,
+      "error": null,
+      "sql": "SELECT \n    ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM \n    dim_customers AS T1\nJOIN \n    fct_orders AS T2 ON T1.customer_id = T2.customer_id\nWHERE \n    T2.status = 'completed';",
+      "sql_history": [
+        "SELECT \n    ROUND(SUM(CASE WHEN T1.customer_segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM \n    dim_customers AS T1\nJOIN \n    fct_orders AS T2 ON T1.customer_id = T2.customer_id\nWHERE \n    T2.status = 'completed';",
+        "SELECT \n    ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM \n    dim_customers AS T1\nJOIN \n    fct_orders AS T2 ON T1.customer_id = T2.customer_id\nWHERE \n    T2.status = 'completed';"
+      ],
+      "latency_s": 1.797,
+      "result_preview": [
+        [
+          "40.0"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q01",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers do we have?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS total_customers FROM customers;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS total_customers FROM customers;"
+      ],
+      "latency_s": 0.188,
+      "result_preview": [
+        [
+          "20"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q02",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in the catalog?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_products FROM products;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_products FROM products;"
+      ],
+      "latency_s": 0.156,
+      "result_preview": [
+        [
+          "15"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q03",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many order lines are there in total, across all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_order_lines\nFROM orders;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_order_lines\nFROM orders;"
+      ],
+      "latency_s": 0.172,
+      "result_preview": [
+        [
+          "80"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q04",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers are in each segment?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;",
+      "sql_history": [
+        "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;"
+      ],
+      "latency_s": 0.25,
+      "result_preview": [
+        [
+          "Consumer",
+          "9"
+        ],
+        [
+          "Home Office",
+          "4"
+        ],
+        [
+          "Corporate",
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q05",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT category, COUNT(*) AS product_count\nFROM dim_products\nGROUP BY category;",
+      "sql_history": [
+        "SELECT category, COUNT(*) AS product_count\nFROM dim_products\nGROUP BY category;"
+      ],
+      "latency_s": 0.219,
+      "result_preview": [
+        [
+          "Office Supplies",
+          "5"
+        ],
+        [
+          "Technology",
+          "5"
+        ],
+        [
+          "Furniture",
+          "5"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q06",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders are there in each status?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT status, COUNT(order_id) AS order_count\nFROM fct_orders\nGROUP BY status;",
+      "sql_history": [
+        "SELECT status, COUNT(order_id) AS order_count\nFROM fct_orders\nGROUP BY status;"
+      ],
+      "latency_s": 0.25,
+      "result_preview": [
+        [
+          "returned",
+          "4"
+        ],
+        [
+          "completed",
+          "69"
+        ],
+        [
+          "cancelled",
+          "4"
+        ],
+        [
+          "pending",
+          "3"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q07",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which state has the most customers?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT state \nFROM customers \nGROUP BY state \nORDER BY COUNT(customer_id) DESC \nLIMIT 1;",
+      "sql_history": [
+        "SELECT state \nFROM customers \nGROUP BY state \nORDER BY COUNT(customer_id) DESC \nLIMIT 1;"
+      ],
+      "latency_s": 0.265,
+      "result_preview": [
+        [
+          "TX"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q08",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders were returned or cancelled?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS total_orders_returned_cancelled\nFROM fct_orders\nWHERE status IN ('Returned', 'Cancelled');",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS total_orders_returned_cancelled\nFROM fct_orders\nWHERE status IN ('Returned', 'Cancelled');"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q09",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average list price of products in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    category, \n    ROUND(AVG(list_price), 2) AS avg_list_price\nFROM \n    dim_products\nGROUP BY \n    category;",
+      "sql_history": [
+        "SELECT \n    category, \n    ROUND(AVG(list_price), 2) AS avg_list_price\nFROM \n    dim_products\nGROUP BY \n    category;"
+      ],
+      "latency_s": 0.344,
+      "result_preview": [
+        [
+          "Technology",
+          "160.99"
+        ],
+        [
+          "Office Supplies",
+          "16.99"
+        ],
+        [
+          "Furniture",
+          "367.99"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q10",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which product has the highest margin percentage?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT product_name, margin_pct\nFROM dim_products\nORDER BY margin_pct DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT product_name, margin_pct\nFROM dim_products\nORDER BY margin_pct DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.25,
+      "result_preview": [
+        [
+          "Ballpoint Pens 12-pack",
+          "63.6"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q11",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average discount on orders for each customer segment, across all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    customer_segment,\n    ROUND(AVG(discount_pct), 2) AS avg_discount_pct\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;",
+      "sql_history": [
+        "SELECT \n    customer_segment,\n    ROUND(AVG(discount_pct), 2) AS avg_discount_pct\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;"
+      ],
+      "latency_s": 0.375,
+      "result_preview": [
+        [
+          "Corporate",
+          "0.06"
+        ],
+        [
+          "Consumer",
+          "0.06"
+        ],
+        [
+          "Home Office",
+          "0.05"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q12",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many units were ordered in each product category, counting all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;"
+      ],
+      "latency_s": 0.437,
+      "result_preview": [
+        [
+          "Office Supplies",
+          "124"
+        ],
+        [
+          "Technology",
+          "47"
+        ],
+        [
+          "Furniture",
+          "35"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q13",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "34"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q14",
+      "tags": [
+        "time"
+      ],
+      "question": "How many customers signed up in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q15",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in each month of 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    COUNT(order_id) AS number_of_orders\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2023\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    COUNT(order_id) AS number_of_orders\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2023\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.516,
+      "result_preview": [
+        [
+          "2023-01-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-02-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-03-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-04-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-05-01 00:00:00",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q16",
+      "tags": [
+        "join",
+        "time"
+      ],
+      "question": "Which customers placed no orders in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT c.customer_id, c.first_name, c.last_name, c.email, c.city, c.state, c.signup_date, c.segment\nFROM customers c\nWHERE NOT EXISTS (\n    SELECT 1\n    FROM orders o\n    WHERE o.customer_id = c.customer_id AND YEAR(o.order_date) = 2023\n);",
+      "sql_history": [
+        "SELECT c.customer_id, c.first_name, c.last_name, c.email, c.city, c.state, c.signup_date, c.segment\nFROM customers c\nWHERE NOT EXISTS (\n    SELECT 1\n    FROM orders o\n    WHERE o.customer_id = c.customer_id AND YEAR(o.order_date) = 2023\n);"
+      ],
+      "latency_s": 0.625,
+      "result_preview": [
+        [
+          "C015",
+          "Olivia",
+          "Martin",
+          "olivia.martin@example.com",
+          "Charlotte",
+          "NC",
+          "2024-03-25",
+          "Corporate"
+        ],
+        [
+          "C016",
+          "Paul",
+          "Garcia",
+          "paul.garcia@example.com",
+          "Indianapolis",
+          "IN",
+          "2024-04-30",
+          "Consumer"
+        ],
+        [
+          "C017",
+          "Quinn",
+          "Martinez",
+          "quinn.martinez@example.com",
+          "San Francisco",
+          "CA",
+          "2024-06-11",
+          "Corporate"
+        ],
+        [
+          "C018",
+          "Rachel",
+          "Robinson",
+          "rachel.robinson@example.com",
+          "Seattle",
+          "WA",
+          "2024-07-19",
+          "Home Office"
+        ],
+        [
+          "C019",
+          "Sam",
+          "Clark",
+          "sam.clark@example.com",
+          "Denver",
+          "CO",
+          "2024-08-08",
+          "Consumer"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q17",
+      "tags": [
+        "join"
+      ],
+      "question": "Which products have never been returned?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT product_id, product_name \nFROM products\nWHERE product_id NOT IN (\n    SELECT product_id \n    FROM fct_orders \n    WHERE status = 'Returned'\n);",
+      "sql_history": [
+        "SELECT product_id, product_name \nFROM products\nWHERE product_id NOT IN (\n    SELECT product_id \n    FROM fct_orders \n    WHERE status = 'Returned'\n);"
+      ],
+      "latency_s": 0.359,
+      "result_preview": [
+        [
+          "P001",
+          "Wireless Keyboard"
+        ],
+        [
+          "P002",
+          "USB-C Hub"
+        ],
+        [
+          "P003",
+          "27-inch Monitor"
+        ],
+        [
+          "P004",
+          "Laptop Stand"
+        ],
+        [
+          "P005",
+          "Noise-Cancelling Headphones"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q18",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many different customers have at least one completed order?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_completed_orders\nFROM orders\nWHERE status = 'Completed';",
+      "sql_history": [
+        "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_completed_orders\nFROM orders\nWHERE status = 'Completed';"
+      ],
+      "latency_s": 0.281,
+      "result_preview": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q19",
+      "tags": [
+        "ranking"
+      ],
+      "question": "Which customer has placed the most orders, counting all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    c.customer_id,\n    c.first_name,\n    c.last_name,\n    COUNT(o.order_id) AS total_orders\nFROM \n    customers c\nJOIN \n    orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.first_name, c.last_name\nORDER BY \n    total_orders DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    c.customer_id,\n    c.first_name,\n    c.last_name,\n    COUNT(o.order_id) AS total_orders\nFROM \n    customers c\nJOIN \n    orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.first_name, c.last_name\nORDER BY \n    total_orders DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.657,
+      "result_preview": [
+        [
+          "C001",
+          "Alice",
+          "Johnson",
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q20",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is our total revenue?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM fct_orders;",
+      "sql_history": [
+        "SELECT ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM fct_orders;"
+      ],
+      "latency_s": 0.25,
+      "result_preview": [
+        [
+          "19234.44"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q21",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is total revenue by product category?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;"
+      ],
+      "latency_s": 0.515,
+      "result_preview": [
+        [
+          "Furniture",
+          "11680.649999999994"
+        ],
+        [
+          "Technology",
+          "5660.529999999998"
+        ],
+        [
+          "Office Supplies",
+          "1893.2600000000004"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q22",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which product category generates the most revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    product_category, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    product_category\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    product_category, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    product_category\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.453,
+      "result_preview": [
+        [
+          "Furniture",
+          "11680.649999999994"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q23",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was our revenue in 2024?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT ROUND(SUM(net_revenue), 2) AS total_revenue_2024\nFROM fct_orders\nWHERE order_year = 2024;",
+      "sql_history": [
+        "SELECT ROUND(SUM(net_revenue), 2) AS total_revenue_2024\nFROM fct_orders\nWHERE order_year = 2024;"
+      ],
+      "latency_s": 0.36,
+      "result_preview": [
+        [
+          "8432.17"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q24",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was revenue by month in 2024?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2024\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2024\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.578,
+      "result_preview": [
+        [
+          "2024-01-01 00:00:00",
+          "887.34"
+        ],
+        [
+          "2024-02-01 00:00:00",
+          "506.97"
+        ],
+        [
+          "2024-03-01 00:00:00",
+          "671.9"
+        ],
+        [
+          "2024-04-01 00:00:00",
+          "879.96"
+        ],
+        [
+          "2024-05-01 00:00:00",
+          "589.93"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q25",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Who are our top 5 customers by revenue?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    c.customer_id,\n    c.full_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;",
+      "sql_history": [
+        "SELECT \n    c.customer_id,\n    c.full_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;"
+      ],
+      "latency_s": 0.656,
+      "result_preview": [
+        [
+          "C003",
+          "Carol Williams",
+          "1648.5600000000002"
+        ],
+        [
+          "C006",
+          "Frank Miller",
+          "1578.1200000000001"
+        ],
+        [
+          "C004",
+          "David Brown",
+          "1438.8500000000001"
+        ],
+        [
+          "C001",
+          "Alice Johnson",
+          "1331.82"
+        ],
+        [
+          "C012",
+          "Leo Jackson",
+          "1301.89"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q26",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is revenue by customer segment?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    customer_segment, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;",
+      "sql_history": [
+        "SELECT \n    customer_segment, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;"
+      ],
+      "latency_s": 0.344,
+      "result_preview": [
+        [
+          "Home Office",
+          "2945.94"
+        ],
+        [
+          "Consumer",
+          "9103.139999999996"
+        ],
+        [
+          "Corporate",
+          "7185.359999999999"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q27",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is the average revenue per order?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders;",
+      "sql_history": [
+        "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders;"
+      ],
+      "latency_s": 0.234,
+      "result_preview": [
+        [
+          "240.4305"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q28",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue did we give up to discounts?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(discount_pct * unit_price * quantity) AS total_discount_revenue\nFROM fct_orders;",
+      "sql_history": [
+        "SELECT SUM(discount_pct * unit_price * quantity) AS total_discount_revenue\nFROM fct_orders;"
+      ],
+      "latency_s": 0.282,
+      "result_preview": [
+        [
+          "2272.4384999999997"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q29",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue was reversed by returns?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'Returned';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'Returned';"
+      ],
+      "latency_s": 0.281,
+      "result_preview": [
+        [
+          "None"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q30",
+      "tags": [
+        "business_rule",
+        "ranking",
+        "time"
+      ],
+      "question": "Which product generated the most revenue in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nWHERE \n    YEAR(o.order_date) = 2023\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nWHERE \n    YEAR(o.order_date) = 2023\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.687,
+      "result_preview": [
+        [
+          "Standing Desk",
+          "2399.96"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q31",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which 3 states bring in the most revenue?",
+      "correct": false,
+      "executed": true,
+      "attempts": 2,
+      "repaired": true,
+      "error": null,
+      "sql": "SELECT \n    customer_state AS state, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_state\nORDER BY \n    total_revenue DESC\nLIMIT 3;",
+      "sql_history": [
+        "SELECT \n    state, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    state\nORDER BY \n    total_revenue DESC\nLIMIT 3;",
+        "SELECT \n    customer_state AS state, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_state\nORDER BY \n    total_revenue DESC\nLIMIT 3;"
+      ],
+      "latency_s": 0.907,
+      "result_preview": [
+        [
+          "TX",
+          "4795.25"
+        ],
+        [
+          "CA",
+          "3615.0299999999993"
+        ],
+        [
+          "IL",
+          "1648.5600000000002"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "schema_only",
+      "id": "q32",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What percentage of revenue comes from Corporate customers? Round to one decimal place.",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM dim_customers AS T1\nJOIN fct_orders AS T2 ON T1.customer_id = T2.customer_id;",
+      "sql_history": [
+        "SELECT ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM dim_customers AS T1\nJOIN fct_orders AS T2 ON T1.customer_id = T2.customer_id;"
+      ],
+      "latency_s": 0.656,
+      "result_preview": [
+        [
+          "37.4"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q01",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers do we have?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS total_customers FROM dim_customers;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS total_customers FROM dim_customers;"
+      ],
+      "latency_s": 0.375,
+      "result_preview": [
+        [
+          "20"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q02",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in the catalog?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_products FROM dim_products;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_products FROM dim_products;"
+      ],
+      "latency_s": 0.203,
+      "result_preview": [
+        [
+          "15"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q03",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many order lines are there in total, across all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_order_lines FROM fct_orders;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_order_lines FROM fct_orders;"
+      ],
+      "latency_s": 0.203,
+      "result_preview": [
+        [
+          "80"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q04",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers are in each segment?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;",
+      "sql_history": [
+        "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;"
+      ],
+      "latency_s": 0.266,
+      "result_preview": [
+        [
+          "Corporate",
+          "7"
+        ],
+        [
+          "Consumer",
+          "9"
+        ],
+        [
+          "Home Office",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q05",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    category, \n    COUNT(product_id) AS product_count\nFROM \n    dim_products\nGROUP BY \n    category;",
+      "sql_history": [
+        "SELECT \n    category, \n    COUNT(product_id) AS product_count\nFROM \n    dim_products\nGROUP BY \n    category;"
+      ],
+      "latency_s": 0.328,
+      "result_preview": [
+        [
+          "Technology",
+          "5"
+        ],
+        [
+          "Office Supplies",
+          "5"
+        ],
+        [
+          "Furniture",
+          "5"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q06",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders are there in each status?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    status, \n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nGROUP BY \n    status;",
+      "sql_history": [
+        "SELECT \n    status, \n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nGROUP BY \n    status;"
+      ],
+      "latency_s": 0.344,
+      "result_preview": [
+        [
+          "completed",
+          "69"
+        ],
+        [
+          "pending",
+          "3"
+        ],
+        [
+          "returned",
+          "4"
+        ],
+        [
+          "cancelled",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q07",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which state has the most customers?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT state, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY state\nORDER BY customer_count DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT state, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY state\nORDER BY customer_count DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.359,
+      "result_preview": [
+        [
+          "TX",
+          "5"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q08",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders were returned or cancelled?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS order_count\nFROM fct_orders\nWHERE status IN ('returned', 'cancelled');",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS order_count\nFROM fct_orders\nWHERE status IN ('returned', 'cancelled');"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "8"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q09",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average list price of products in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    ROUND(AVG(p.list_price), 2) AS avg_list_price\nFROM \n    dim_products p\nGROUP BY \n    p.category;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    ROUND(AVG(p.list_price), 2) AS avg_list_price\nFROM \n    dim_products p\nGROUP BY \n    p.category;"
+      ],
+      "latency_s": 0.39,
+      "result_preview": [
+        [
+          "Furniture",
+          "367.99"
+        ],
+        [
+          "Office Supplies",
+          "16.99"
+        ],
+        [
+          "Technology",
+          "160.99"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q10",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which product has the highest margin percentage?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT p.product_name, p.margin_pct\nFROM dim_products p\nORDER BY p.margin_pct DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT p.product_name, p.margin_pct\nFROM dim_products p\nORDER BY p.margin_pct DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.313,
+      "result_preview": [
+        [
+          "Ballpoint Pens 12-pack",
+          "63.6"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q11",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average discount on orders for each customer segment, across all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    dim_customers.segment,\n    AVG(fct_orders.discount_pct) AS avg_discount_pct\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nGROUP BY \n    dim_customers.segment;",
+      "sql_history": [
+        "SELECT \n    dim_customers.segment,\n    AVG(fct_orders.discount_pct) AS avg_discount_pct\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nGROUP BY \n    dim_customers.segment;"
+      ],
+      "latency_s": 0.562,
+      "result_preview": [
+        [
+          "Consumer",
+          "0.05500000000000001"
+        ],
+        [
+          "Corporate",
+          "0.064"
+        ],
+        [
+          "Home Office",
+          "0.05333333333333334"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q12",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many units were ordered in each product category, counting all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;"
+      ],
+      "latency_s": 0.469,
+      "result_preview": [
+        [
+          "Office Supplies",
+          "124"
+        ],
+        [
+          "Furniture",
+          "35"
+        ],
+        [
+          "Technology",
+          "47"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q13",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "34"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q14",
+      "tags": [
+        "time"
+      ],
+      "question": "How many customers signed up in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;"
+      ],
+      "latency_s": 0.344,
+      "result_preview": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q15",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in each month of 2023?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nWHERE \n    order_year = 2023 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nWHERE \n    order_year = 2023 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.547,
+      "result_preview": [
+        [
+          "2023-01-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-02-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-03-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-04-01 00:00:00",
+          "3"
+        ],
+        [
+          "2023-05-01 00:00:00",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q16",
+      "tags": [
+        "join",
+        "time"
+      ],
+      "question": "Which customers placed no orders in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT dc.customer_id, dc.full_name, dc.email, dc.city, dc.state, dc.signup_date, dc.segment\nFROM dim_customers dc\nWHERE dc.customer_id NOT IN (\n    SELECT fco.customer_id\n    FROM fct_orders fco\n    WHERE YEAR(fco.order_date) = 2023 AND fco.status = 'completed'\n);",
+      "sql_history": [
+        "SELECT dc.customer_id, dc.full_name, dc.email, dc.city, dc.state, dc.signup_date, dc.segment\nFROM dim_customers dc\nWHERE dc.customer_id NOT IN (\n    SELECT fco.customer_id\n    FROM fct_orders fco\n    WHERE YEAR(fco.order_date) = 2023 AND fco.status = 'completed'\n);"
+      ],
+      "latency_s": 0.718,
+      "result_preview": [
+        [
+          "C015",
+          "Olivia Martin",
+          "olivia.martin@example.com",
+          "Charlotte",
+          "NC",
+          "2024-03-25",
+          "Corporate"
+        ],
+        [
+          "C016",
+          "Paul Garcia",
+          "paul.garcia@example.com",
+          "Indianapolis",
+          "IN",
+          "2024-04-30",
+          "Consumer"
+        ],
+        [
+          "C017",
+          "Quinn Martinez",
+          "quinn.martinez@example.com",
+          "San Francisco",
+          "CA",
+          "2024-06-11",
+          "Corporate"
+        ],
+        [
+          "C018",
+          "Rachel Robinson",
+          "rachel.robinson@example.com",
+          "Seattle",
+          "WA",
+          "2024-07-19",
+          "Home Office"
+        ],
+        [
+          "C019",
+          "Sam Clark",
+          "sam.clark@example.com",
+          "Denver",
+          "CO",
+          "2024-08-08",
+          "Consumer"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q17",
+      "tags": [
+        "join"
+      ],
+      "question": "Which products have never been returned?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT p.product_id, p.product_name\nFROM dim_products p\nJOIN fct_orders o ON p.product_id = o.product_id\nWHERE o.status != 'returned';",
+      "sql_history": [
+        "SELECT p.product_id, p.product_name\nFROM dim_products p\nJOIN fct_orders o ON p.product_id = o.product_id\nWHERE o.status != 'returned';"
+      ],
+      "latency_s": 0.391,
+      "result_preview": [
+        [
+          "P001",
+          "Wireless Keyboard"
+        ],
+        [
+          "P002",
+          "USB-C Hub"
+        ],
+        [
+          "P003",
+          "27-inch Monitor"
+        ],
+        [
+          "P004",
+          "Laptop Stand"
+        ],
+        [
+          "P005",
+          "Noise-Cancelling Headphones"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q18",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many different customers have at least one completed order?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_orders\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_orders\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.313,
+      "result_preview": [
+        [
+          "20"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q19",
+      "tags": [
+        "ranking"
+      ],
+      "question": "Which customer has placed the most orders, counting all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    c.customer_id,\n    c.full_name,\n    COUNT(o.order_id) AS order_count\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    order_count DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    c.customer_id,\n    c.full_name,\n    COUNT(o.order_id) AS order_count\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    order_count DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.671,
+      "result_preview": [
+        [
+          "C001",
+          "Alice Johnson",
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q20",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is our total revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.282,
+      "result_preview": [
+        [
+          "15905.07999999999"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q21",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is total revenue by product category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;"
+      ],
+      "latency_s": 0.625,
+      "result_preview": [
+        [
+          "Furniture",
+          "9713.699999999995"
+        ],
+        [
+          "Technology",
+          "4418.079999999999"
+        ],
+        [
+          "Office Supplies",
+          "1773.3000000000004"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q22",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which product category generates the most revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.687,
+      "result_preview": [
+        [
+          "Furniture",
+          "9713.699999999995"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q23",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was our revenue in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE order_year = 2024 AND status = 'completed';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE order_year = 2024 AND status = 'completed';"
+      ],
+      "latency_s": 0.36,
+      "result_preview": [
+        [
+          "5847.739999999997"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q24",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was revenue by month in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    SUM(net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nWHERE \n    order_year = 2024 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    SUM(net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nWHERE \n    order_year = 2024 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.546,
+      "result_preview": [
+        [
+          "2024-01-01 00:00:00",
+          "389.86"
+        ],
+        [
+          "2024-02-01 00:00:00",
+          "506.97"
+        ],
+        [
+          "2024-03-01 00:00:00",
+          "671.9"
+        ],
+        [
+          "2024-04-01 00:00:00",
+          "279.97"
+        ],
+        [
+          "2024-05-01 00:00:00",
+          "589.9300000000001"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q25",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Who are our top 5 customers by revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    d.customer_id,\n    d.full_name,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.customer_id, d.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;",
+      "sql_history": [
+        "SELECT \n    d.customer_id,\n    d.full_name,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.customer_id, d.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;"
+      ],
+      "latency_s": 0.766,
+      "result_preview": [
+        [
+          "C006",
+          "Frank Miller",
+          "1578.1200000000001"
+        ],
+        [
+          "C004",
+          "David Brown",
+          "1438.8500000000001"
+        ],
+        [
+          "C003",
+          "Carol Williams",
+          "1411.07"
+        ],
+        [
+          "C012",
+          "Leo Jackson",
+          "1301.8899999999999"
+        ],
+        [
+          "C002",
+          "Bob Smith",
+          "1256.3400000000001"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q26",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is revenue by customer segment?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    dim_customers.segment,\n    SUM(fct_orders.net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nWHERE \n    fct_orders.status = 'completed'\nGROUP BY \n    dim_customers.segment\nORDER BY \n    total_net_revenue DESC;",
+      "sql_history": [
+        "SELECT \n    dim_customers.segment,\n    SUM(fct_orders.net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nWHERE \n    fct_orders.status = 'completed'\nGROUP BY \n    dim_customers.segment\nORDER BY \n    total_net_revenue DESC;"
+      ],
+      "latency_s": 0.75,
+      "result_preview": [
+        [
+          "Consumer",
+          "7483.219999999997"
+        ],
+        [
+          "Corporate",
+          "6360.889999999999"
+        ],
+        [
+          "Home Office",
+          "2060.9700000000003"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q27",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is the average revenue per order?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "230.50840579710132"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q28",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue did we give up to discounts?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue * discount_pct) AS total_discounted_revenue\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT SUM(net_revenue * discount_pct) AS total_discounted_revenue\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.343,
+      "result_preview": [
+        [
+          "1562.4465000000005"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q29",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue was reversed by returns?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'returned';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'returned';"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "1062.46"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q30",
+      "tags": [
+        "business_rule",
+        "ranking",
+        "time"
+      ],
+      "question": "Which product generated the most revenue in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.order_year = 2023 AND o.status = 'completed'\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.order_year = 2023 AND o.status = 'completed'\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.766,
+      "result_preview": [
+        [
+          "Standing Desk",
+          "2399.96"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q31",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which 3 states bring in the most revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    d.state,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.state\nORDER BY \n    total_revenue DESC\nLIMIT 3;",
+      "sql_history": [
+        "SELECT \n    d.state,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.state\nORDER BY \n    total_revenue DESC\nLIMIT 3;"
+      ],
+      "latency_s": 0.672,
+      "result_preview": [
+        [
+          "TX",
+          "3970.2799999999997"
+        ],
+        [
+          "CA",
+          "3368.04"
+        ],
+        [
+          "PA",
+          "1578.1200000000001"
+        ]
+      ]
+    },
+    {
+      "repeat": 2,
+      "condition": "with_manifest",
+      "id": "q32",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What percentage of revenue comes from Corporate customers? Round to one decimal place.",
+      "correct": true,
+      "executed": true,
+      "attempts": 2,
+      "repaired": true,
+      "error": null,
+      "sql": "SELECT \n    ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM \n    dim_customers AS T1\nJOIN \n    fct_orders AS T2 ON T1.customer_id = T2.customer_id\nWHERE \n    T2.status = 'completed';",
+      "sql_history": [
+        "SELECT \n    ROUND(SUM(CASE WHEN T1.customer_segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM \n    dim_customers AS T1\nJOIN \n    fct_orders AS T2 ON T1.customer_id = T2.customer_id\nWHERE \n    T2.status = 'completed';",
+        "SELECT \n    ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM \n    dim_customers AS T1\nJOIN \n    fct_orders AS T2 ON T1.customer_id = T2.customer_id\nWHERE \n    T2.status = 'completed';"
+      ],
+      "latency_s": 1.625,
+      "result_preview": [
+        [
+          "40.0"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q01",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers do we have?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS total_customers FROM customers;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS total_customers FROM customers;"
+      ],
+      "latency_s": 0.187,
+      "result_preview": [
+        [
+          "20"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q02",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in the catalog?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_products FROM products;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_products FROM products;"
+      ],
+      "latency_s": 0.156,
+      "result_preview": [
+        [
+          "15"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q03",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many order lines are there in total, across all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_order_lines\nFROM orders;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_order_lines\nFROM orders;"
+      ],
+      "latency_s": 0.188,
+      "result_preview": [
+        [
+          "80"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q04",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers are in each segment?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;",
+      "sql_history": [
+        "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;"
+      ],
+      "latency_s": 0.234,
+      "result_preview": [
+        [
+          "Home Office",
+          "4"
+        ],
+        [
+          "Corporate",
+          "7"
+        ],
+        [
+          "Consumer",
+          "9"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q05",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT category, COUNT(*) AS product_count\nFROM dim_products\nGROUP BY category;",
+      "sql_history": [
+        "SELECT category, COUNT(*) AS product_count\nFROM dim_products\nGROUP BY category;"
+      ],
+      "latency_s": 0.235,
+      "result_preview": [
+        [
+          "Technology",
+          "5"
+        ],
+        [
+          "Office Supplies",
+          "5"
+        ],
+        [
+          "Furniture",
+          "5"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q06",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders are there in each status?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT status, COUNT(order_id) AS order_count\nFROM fct_orders\nGROUP BY status;",
+      "sql_history": [
+        "SELECT status, COUNT(order_id) AS order_count\nFROM fct_orders\nGROUP BY status;"
+      ],
+      "latency_s": 0.234,
+      "result_preview": [
+        [
+          "pending",
+          "3"
+        ],
+        [
+          "returned",
+          "4"
+        ],
+        [
+          "cancelled",
+          "4"
+        ],
+        [
+          "completed",
+          "69"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q07",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which state has the most customers?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT state \nFROM customers \nGROUP BY state \nORDER BY COUNT(customer_id) DESC \nLIMIT 1;",
+      "sql_history": [
+        "SELECT state \nFROM customers \nGROUP BY state \nORDER BY COUNT(customer_id) DESC \nLIMIT 1;"
+      ],
+      "latency_s": 0.281,
+      "result_preview": [
+        [
+          "TX"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q08",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders were returned or cancelled?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS total_orders_returned_cancelled\nFROM fct_orders\nWHERE status IN ('Returned', 'Cancelled');",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS total_orders_returned_cancelled\nFROM fct_orders\nWHERE status IN ('Returned', 'Cancelled');"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q09",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average list price of products in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    category, \n    ROUND(AVG(list_price), 2) AS avg_list_price\nFROM \n    dim_products\nGROUP BY \n    category;",
+      "sql_history": [
+        "SELECT \n    category, \n    ROUND(AVG(list_price), 2) AS avg_list_price\nFROM \n    dim_products\nGROUP BY \n    category;"
+      ],
+      "latency_s": 0.344,
+      "result_preview": [
+        [
+          "Technology",
+          "160.99"
+        ],
+        [
+          "Office Supplies",
+          "16.99"
+        ],
+        [
+          "Furniture",
+          "367.99"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q10",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which product has the highest margin percentage?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT product_name, margin_pct\nFROM dim_products\nORDER BY margin_pct DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT product_name, margin_pct\nFROM dim_products\nORDER BY margin_pct DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.25,
+      "result_preview": [
+        [
+          "Ballpoint Pens 12-pack",
+          "63.6"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q11",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average discount on orders for each customer segment, across all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    customer_segment,\n    ROUND(AVG(discount_pct), 2) AS avg_discount_pct\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;",
+      "sql_history": [
+        "SELECT \n    customer_segment,\n    ROUND(AVG(discount_pct), 2) AS avg_discount_pct\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;"
+      ],
+      "latency_s": 0.359,
+      "result_preview": [
+        [
+          "Corporate",
+          "0.06"
+        ],
+        [
+          "Consumer",
+          "0.06"
+        ],
+        [
+          "Home Office",
+          "0.05"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q12",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many units were ordered in each product category, counting all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;"
+      ],
+      "latency_s": 0.437,
+      "result_preview": [
+        [
+          "Office Supplies",
+          "124"
+        ],
+        [
+          "Technology",
+          "47"
+        ],
+        [
+          "Furniture",
+          "35"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q13",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;"
+      ],
+      "latency_s": 0.282,
+      "result_preview": [
+        [
+          "34"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q14",
+      "tags": [
+        "time"
+      ],
+      "question": "How many customers signed up in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q15",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in each month of 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    COUNT(order_id) AS number_of_orders\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2023\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    COUNT(order_id) AS number_of_orders\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2023\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.515,
+      "result_preview": [
+        [
+          "2023-01-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-02-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-03-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-04-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-05-01 00:00:00",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q16",
+      "tags": [
+        "join",
+        "time"
+      ],
+      "question": "Which customers placed no orders in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT c.customer_id, c.first_name, c.last_name, c.email, c.city, c.state, c.signup_date, c.segment\nFROM customers c\nWHERE NOT EXISTS (\n    SELECT 1\n    FROM orders o\n    WHERE o.customer_id = c.customer_id AND YEAR(o.order_date) = 2023\n);",
+      "sql_history": [
+        "SELECT c.customer_id, c.first_name, c.last_name, c.email, c.city, c.state, c.signup_date, c.segment\nFROM customers c\nWHERE NOT EXISTS (\n    SELECT 1\n    FROM orders o\n    WHERE o.customer_id = c.customer_id AND YEAR(o.order_date) = 2023\n);"
+      ],
+      "latency_s": 0.641,
+      "result_preview": [
+        [
+          "C015",
+          "Olivia",
+          "Martin",
+          "olivia.martin@example.com",
+          "Charlotte",
+          "NC",
+          "2024-03-25",
+          "Corporate"
+        ],
+        [
+          "C016",
+          "Paul",
+          "Garcia",
+          "paul.garcia@example.com",
+          "Indianapolis",
+          "IN",
+          "2024-04-30",
+          "Consumer"
+        ],
+        [
+          "C017",
+          "Quinn",
+          "Martinez",
+          "quinn.martinez@example.com",
+          "San Francisco",
+          "CA",
+          "2024-06-11",
+          "Corporate"
+        ],
+        [
+          "C018",
+          "Rachel",
+          "Robinson",
+          "rachel.robinson@example.com",
+          "Seattle",
+          "WA",
+          "2024-07-19",
+          "Home Office"
+        ],
+        [
+          "C019",
+          "Sam",
+          "Clark",
+          "sam.clark@example.com",
+          "Denver",
+          "CO",
+          "2024-08-08",
+          "Consumer"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q17",
+      "tags": [
+        "join"
+      ],
+      "question": "Which products have never been returned?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT product_id, product_name \nFROM products\nWHERE product_id NOT IN (\n    SELECT product_id \n    FROM fct_orders \n    WHERE status = 'Returned'\n);",
+      "sql_history": [
+        "SELECT product_id, product_name \nFROM products\nWHERE product_id NOT IN (\n    SELECT product_id \n    FROM fct_orders \n    WHERE status = 'Returned'\n);"
+      ],
+      "latency_s": 0.359,
+      "result_preview": [
+        [
+          "P001",
+          "Wireless Keyboard"
+        ],
+        [
+          "P002",
+          "USB-C Hub"
+        ],
+        [
+          "P003",
+          "27-inch Monitor"
+        ],
+        [
+          "P004",
+          "Laptop Stand"
+        ],
+        [
+          "P005",
+          "Noise-Cancelling Headphones"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q18",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many different customers have at least one completed order?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_completed_orders\nFROM orders\nWHERE status = 'Completed';",
+      "sql_history": [
+        "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_completed_orders\nFROM orders\nWHERE status = 'Completed';"
+      ],
+      "latency_s": 0.281,
+      "result_preview": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q19",
+      "tags": [
+        "ranking"
+      ],
+      "question": "Which customer has placed the most orders, counting all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    c.customer_id,\n    c.first_name,\n    c.last_name,\n    COUNT(o.order_id) AS total_orders\nFROM \n    customers c\nJOIN \n    orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.first_name, c.last_name\nORDER BY \n    total_orders DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    c.customer_id,\n    c.first_name,\n    c.last_name,\n    COUNT(o.order_id) AS total_orders\nFROM \n    customers c\nJOIN \n    orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.first_name, c.last_name\nORDER BY \n    total_orders DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.657,
+      "result_preview": [
+        [
+          "C001",
+          "Alice",
+          "Johnson",
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q20",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is our total revenue?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM fct_orders;",
+      "sql_history": [
+        "SELECT ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM fct_orders;"
+      ],
+      "latency_s": 0.25,
+      "result_preview": [
+        [
+          "19234.44"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q21",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is total revenue by product category?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;"
+      ],
+      "latency_s": 0.515,
+      "result_preview": [
+        [
+          "Furniture",
+          "11680.649999999994"
+        ],
+        [
+          "Technology",
+          "5660.529999999998"
+        ],
+        [
+          "Office Supplies",
+          "1893.2600000000004"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q22",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which product category generates the most revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    product_category, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    product_category\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    product_category, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    product_category\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.438,
+      "result_preview": [
+        [
+          "Furniture",
+          "11680.649999999994"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q23",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was our revenue in 2024?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT ROUND(SUM(net_revenue), 2) AS total_revenue_2024\nFROM fct_orders\nWHERE order_year = 2024;",
+      "sql_history": [
+        "SELECT ROUND(SUM(net_revenue), 2) AS total_revenue_2024\nFROM fct_orders\nWHERE order_year = 2024;"
+      ],
+      "latency_s": 0.375,
+      "result_preview": [
+        [
+          "8432.17"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q24",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was revenue by month in 2024?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2024\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    ROUND(SUM(net_revenue), 2) AS total_revenue\nFROM \n    fct_orders\nWHERE \n    EXTRACT(YEAR FROM order_date) = 2024\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.562,
+      "result_preview": [
+        [
+          "2024-01-01 00:00:00",
+          "887.34"
+        ],
+        [
+          "2024-02-01 00:00:00",
+          "506.97"
+        ],
+        [
+          "2024-03-01 00:00:00",
+          "671.9"
+        ],
+        [
+          "2024-04-01 00:00:00",
+          "879.96"
+        ],
+        [
+          "2024-05-01 00:00:00",
+          "589.93"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q25",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Who are our top 5 customers by revenue?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    c.customer_id,\n    c.full_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;",
+      "sql_history": [
+        "SELECT \n    c.customer_id,\n    c.full_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;"
+      ],
+      "latency_s": 0.641,
+      "result_preview": [
+        [
+          "C003",
+          "Carol Williams",
+          "1648.5600000000002"
+        ],
+        [
+          "C006",
+          "Frank Miller",
+          "1578.1200000000001"
+        ],
+        [
+          "C004",
+          "David Brown",
+          "1438.8500000000001"
+        ],
+        [
+          "C001",
+          "Alice Johnson",
+          "1331.82"
+        ],
+        [
+          "C012",
+          "Leo Jackson",
+          "1301.89"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q26",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is revenue by customer segment?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    customer_segment, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;",
+      "sql_history": [
+        "SELECT \n    customer_segment, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_segment;"
+      ],
+      "latency_s": 0.344,
+      "result_preview": [
+        [
+          "Corporate",
+          "7185.359999999999"
+        ],
+        [
+          "Home Office",
+          "2945.94"
+        ],
+        [
+          "Consumer",
+          "9103.139999999996"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q27",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is the average revenue per order?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders;",
+      "sql_history": [
+        "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders;"
+      ],
+      "latency_s": 0.234,
+      "result_preview": [
+        [
+          "240.4305"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q28",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue did we give up to discounts?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(discount_pct * unit_price * quantity) AS total_discount_revenue\nFROM fct_orders;",
+      "sql_history": [
+        "SELECT SUM(discount_pct * unit_price * quantity) AS total_discount_revenue\nFROM fct_orders;"
+      ],
+      "latency_s": 0.266,
+      "result_preview": [
+        [
+          "2272.4384999999997"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q29",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue was reversed by returns?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'Returned';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'Returned';"
+      ],
+      "latency_s": 0.281,
+      "result_preview": [
+        [
+          "None"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q30",
+      "tags": [
+        "business_rule",
+        "ranking",
+        "time"
+      ],
+      "question": "Which product generated the most revenue in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nWHERE \n    YEAR(o.order_date) = 2023\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    products p ON o.product_id = p.product_id\nWHERE \n    YEAR(o.order_date) = 2023\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.672,
+      "result_preview": [
+        [
+          "Standing Desk",
+          "2399.96"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q31",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which 3 states bring in the most revenue?",
+      "correct": false,
+      "executed": true,
+      "attempts": 2,
+      "repaired": true,
+      "error": null,
+      "sql": "SELECT \n    customer_state AS state, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_state\nORDER BY \n    total_revenue DESC\nLIMIT 3;",
+      "sql_history": [
+        "SELECT \n    state, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    state\nORDER BY \n    total_revenue DESC\nLIMIT 3;",
+        "SELECT \n    customer_state AS state, \n    SUM(net_revenue) AS total_revenue\nFROM \n    fct_orders\nGROUP BY \n    customer_state\nORDER BY \n    total_revenue DESC\nLIMIT 3;"
+      ],
+      "latency_s": 0.89,
+      "result_preview": [
+        [
+          "TX",
+          "4795.25"
+        ],
+        [
+          "CA",
+          "3615.0299999999993"
+        ],
+        [
+          "IL",
+          "1648.5600000000002"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "schema_only",
+      "id": "q32",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What percentage of revenue comes from Corporate customers? Round to one decimal place.",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM dim_customers AS T1\nJOIN fct_orders AS T2 ON T1.customer_id = T2.customer_id;",
+      "sql_history": [
+        "SELECT ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM dim_customers AS T1\nJOIN fct_orders AS T2 ON T1.customer_id = T2.customer_id;"
+      ],
+      "latency_s": 0.641,
+      "result_preview": [
+        [
+          "37.4"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q01",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers do we have?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS total_customers FROM dim_customers;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS total_customers FROM dim_customers;"
+      ],
+      "latency_s": 0.359,
+      "result_preview": [
+        [
+          "20"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q02",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in the catalog?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_products FROM dim_products;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_products FROM dim_products;"
+      ],
+      "latency_s": 0.188,
+      "result_preview": [
+        [
+          "15"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q03",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many order lines are there in total, across all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(*) AS total_order_lines FROM fct_orders;",
+      "sql_history": [
+        "SELECT COUNT(*) AS total_order_lines FROM fct_orders;"
+      ],
+      "latency_s": 0.203,
+      "result_preview": [
+        [
+          "80"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q04",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many customers are in each segment?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;",
+      "sql_history": [
+        "SELECT segment, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY segment;"
+      ],
+      "latency_s": 0.266,
+      "result_preview": [
+        [
+          "Home Office",
+          "4"
+        ],
+        [
+          "Corporate",
+          "7"
+        ],
+        [
+          "Consumer",
+          "9"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q05",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many products are in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    category, \n    COUNT(product_id) AS product_count\nFROM \n    dim_products\nGROUP BY \n    category;",
+      "sql_history": [
+        "SELECT \n    category, \n    COUNT(product_id) AS product_count\nFROM \n    dim_products\nGROUP BY \n    category;"
+      ],
+      "latency_s": 0.328,
+      "result_preview": [
+        [
+          "Furniture",
+          "5"
+        ],
+        [
+          "Technology",
+          "5"
+        ],
+        [
+          "Office Supplies",
+          "5"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q06",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders are there in each status?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    status, \n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nGROUP BY \n    status;",
+      "sql_history": [
+        "SELECT \n    status, \n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nGROUP BY \n    status;"
+      ],
+      "latency_s": 0.328,
+      "result_preview": [
+        [
+          "completed",
+          "69"
+        ],
+        [
+          "pending",
+          "3"
+        ],
+        [
+          "returned",
+          "4"
+        ],
+        [
+          "cancelled",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q07",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which state has the most customers?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT state, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY state\nORDER BY customer_count DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT state, COUNT(customer_id) AS customer_count\nFROM dim_customers\nGROUP BY state\nORDER BY customer_count DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.344,
+      "result_preview": [
+        [
+          "TX",
+          "5"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q08",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many orders were returned or cancelled?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS order_count\nFROM fct_orders\nWHERE status IN ('returned', 'cancelled');",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS order_count\nFROM fct_orders\nWHERE status IN ('returned', 'cancelled');"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "8"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q09",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average list price of products in each category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    ROUND(AVG(p.list_price), 2) AS avg_list_price\nFROM \n    dim_products p\nGROUP BY \n    p.category;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    ROUND(AVG(p.list_price), 2) AS avg_list_price\nFROM \n    dim_products p\nGROUP BY \n    p.category;"
+      ],
+      "latency_s": 0.406,
+      "result_preview": [
+        [
+          "Office Supplies",
+          "16.99"
+        ],
+        [
+          "Furniture",
+          "367.99"
+        ],
+        [
+          "Technology",
+          "160.99"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q10",
+      "tags": [
+        "basic",
+        "ranking"
+      ],
+      "question": "Which product has the highest margin percentage?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT p.product_name, p.margin_pct\nFROM dim_products p\nORDER BY p.margin_pct DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT p.product_name, p.margin_pct\nFROM dim_products p\nORDER BY p.margin_pct DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.312,
+      "result_preview": [
+        [
+          "Ballpoint Pens 12-pack",
+          "63.6"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q11",
+      "tags": [
+        "basic"
+      ],
+      "question": "What is the average discount on orders for each customer segment, across all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    dim_customers.segment,\n    AVG(fct_orders.discount_pct) AS avg_discount_pct\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nGROUP BY \n    dim_customers.segment;",
+      "sql_history": [
+        "SELECT \n    dim_customers.segment,\n    AVG(fct_orders.discount_pct) AS avg_discount_pct\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nGROUP BY \n    dim_customers.segment;"
+      ],
+      "latency_s": 0.563,
+      "result_preview": [
+        [
+          "Home Office",
+          "0.05333333333333334"
+        ],
+        [
+          "Consumer",
+          "0.05500000000000001"
+        ],
+        [
+          "Corporate",
+          "0.064"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q12",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many units were ordered in each product category, counting all orders?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.quantity) AS total_units_ordered\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nGROUP BY \n    p.category;"
+      ],
+      "latency_s": 0.484,
+      "result_preview": [
+        [
+          "Furniture",
+          "35"
+        ],
+        [
+          "Office Supplies",
+          "124"
+        ],
+        [
+          "Technology",
+          "47"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q13",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;",
+      "sql_history": [
+        "SELECT COUNT(order_id) AS total_orders\nFROM fct_orders\nWHERE order_year = 2024;"
+      ],
+      "latency_s": 0.313,
+      "result_preview": [
+        [
+          "34"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q14",
+      "tags": [
+        "time"
+      ],
+      "question": "How many customers signed up in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;",
+      "sql_history": [
+        "SELECT COUNT(customer_id) AS customer_count\nFROM dim_customers\nWHERE YEAR(signup_date) = 2023;"
+      ],
+      "latency_s": 0.328,
+      "result_preview": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q15",
+      "tags": [
+        "time"
+      ],
+      "question": "How many orders were placed in each month of 2023?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nWHERE \n    order_year = 2023 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    COUNT(order_id) AS order_count\nFROM \n    fct_orders\nWHERE \n    order_year = 2023 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.547,
+      "result_preview": [
+        [
+          "2023-01-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-02-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-03-01 00:00:00",
+          "4"
+        ],
+        [
+          "2023-04-01 00:00:00",
+          "3"
+        ],
+        [
+          "2023-05-01 00:00:00",
+          "4"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q16",
+      "tags": [
+        "join",
+        "time"
+      ],
+      "question": "Which customers placed no orders in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT dc.customer_id, dc.full_name, dc.email, dc.city, dc.state, dc.signup_date, dc.segment\nFROM dim_customers dc\nWHERE dc.customer_id NOT IN (\n    SELECT fco.customer_id\n    FROM fct_orders fco\n    WHERE YEAR(fco.order_date) = 2023 AND fco.status = 'completed'\n);",
+      "sql_history": [
+        "SELECT dc.customer_id, dc.full_name, dc.email, dc.city, dc.state, dc.signup_date, dc.segment\nFROM dim_customers dc\nWHERE dc.customer_id NOT IN (\n    SELECT fco.customer_id\n    FROM fct_orders fco\n    WHERE YEAR(fco.order_date) = 2023 AND fco.status = 'completed'\n);"
+      ],
+      "latency_s": 0.718,
+      "result_preview": [
+        [
+          "C015",
+          "Olivia Martin",
+          "olivia.martin@example.com",
+          "Charlotte",
+          "NC",
+          "2024-03-25",
+          "Corporate"
+        ],
+        [
+          "C016",
+          "Paul Garcia",
+          "paul.garcia@example.com",
+          "Indianapolis",
+          "IN",
+          "2024-04-30",
+          "Consumer"
+        ],
+        [
+          "C017",
+          "Quinn Martinez",
+          "quinn.martinez@example.com",
+          "San Francisco",
+          "CA",
+          "2024-06-11",
+          "Corporate"
+        ],
+        [
+          "C018",
+          "Rachel Robinson",
+          "rachel.robinson@example.com",
+          "Seattle",
+          "WA",
+          "2024-07-19",
+          "Home Office"
+        ],
+        [
+          "C019",
+          "Sam Clark",
+          "sam.clark@example.com",
+          "Denver",
+          "CO",
+          "2024-08-08",
+          "Consumer"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q17",
+      "tags": [
+        "join"
+      ],
+      "question": "Which products have never been returned?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT p.product_id, p.product_name\nFROM dim_products p\nJOIN fct_orders o ON p.product_id = o.product_id\nWHERE o.status != 'returned';",
+      "sql_history": [
+        "SELECT p.product_id, p.product_name\nFROM dim_products p\nJOIN fct_orders o ON p.product_id = o.product_id\nWHERE o.status != 'returned';"
+      ],
+      "latency_s": 0.407,
+      "result_preview": [
+        [
+          "P001",
+          "Wireless Keyboard"
+        ],
+        [
+          "P002",
+          "USB-C Hub"
+        ],
+        [
+          "P003",
+          "27-inch Monitor"
+        ],
+        [
+          "P004",
+          "Laptop Stand"
+        ],
+        [
+          "P005",
+          "Noise-Cancelling Headphones"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q18",
+      "tags": [
+        "basic"
+      ],
+      "question": "How many different customers have at least one completed order?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_orders\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT COUNT(DISTINCT customer_id) AS distinct_customers_with_orders\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.328,
+      "result_preview": [
+        [
+          "20"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q19",
+      "tags": [
+        "ranking"
+      ],
+      "question": "Which customer has placed the most orders, counting all statuses?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    c.customer_id,\n    c.full_name,\n    COUNT(o.order_id) AS order_count\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    order_count DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    c.customer_id,\n    c.full_name,\n    COUNT(o.order_id) AS order_count\nFROM \n    dim_customers c\nJOIN \n    fct_orders o ON c.customer_id = o.customer_id\nGROUP BY \n    c.customer_id, c.full_name\nORDER BY \n    order_count DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.672,
+      "result_preview": [
+        [
+          "C001",
+          "Alice Johnson",
+          "7"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q20",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is our total revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.297,
+      "result_preview": [
+        [
+          "15905.07999999999"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q21",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is total revenue by product category?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC;"
+      ],
+      "latency_s": 0.656,
+      "result_preview": [
+        [
+          "Furniture",
+          "9713.699999999995"
+        ],
+        [
+          "Technology",
+          "4418.079999999999"
+        ],
+        [
+          "Office Supplies",
+          "1773.3000000000004"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q22",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which product category generates the most revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    p.category,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.status = 'completed'\nGROUP BY \n    p.category\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.672,
+      "result_preview": [
+        [
+          "Furniture",
+          "9713.699999999995"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q23",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was our revenue in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE order_year = 2024 AND status = 'completed';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_revenue\nFROM fct_orders\nWHERE order_year = 2024 AND status = 'completed';"
+      ],
+      "latency_s": 0.375,
+      "result_preview": [
+        [
+          "5847.739999999997"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q24",
+      "tags": [
+        "business_rule",
+        "time"
+      ],
+      "question": "What was revenue by month in 2024?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    order_month,\n    SUM(net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nWHERE \n    order_year = 2024 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;",
+      "sql_history": [
+        "SELECT \n    order_month,\n    SUM(net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nWHERE \n    order_year = 2024 AND status = 'completed'\nGROUP BY \n    order_month\nORDER BY \n    order_month;"
+      ],
+      "latency_s": 0.562,
+      "result_preview": [
+        [
+          "2024-01-01 00:00:00",
+          "389.86"
+        ],
+        [
+          "2024-02-01 00:00:00",
+          "506.97"
+        ],
+        [
+          "2024-03-01 00:00:00",
+          "671.9"
+        ],
+        [
+          "2024-04-01 00:00:00",
+          "279.97"
+        ],
+        [
+          "2024-05-01 00:00:00",
+          "589.9300000000001"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q25",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Who are our top 5 customers by revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    d.customer_id,\n    d.full_name,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.customer_id, d.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;",
+      "sql_history": [
+        "SELECT \n    d.customer_id,\n    d.full_name,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.customer_id, d.full_name\nORDER BY \n    total_revenue DESC\nLIMIT 5;"
+      ],
+      "latency_s": 0.766,
+      "result_preview": [
+        [
+          "C006",
+          "Frank Miller",
+          "1578.1200000000001"
+        ],
+        [
+          "C004",
+          "David Brown",
+          "1438.8500000000001"
+        ],
+        [
+          "C003",
+          "Carol Williams",
+          "1411.07"
+        ],
+        [
+          "C012",
+          "Leo Jackson",
+          "1301.8899999999999"
+        ],
+        [
+          "C002",
+          "Bob Smith",
+          "1256.3400000000001"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q26",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is revenue by customer segment?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    dim_customers.segment,\n    SUM(fct_orders.net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nWHERE \n    fct_orders.status = 'completed'\nGROUP BY \n    dim_customers.segment\nORDER BY \n    total_net_revenue DESC;",
+      "sql_history": [
+        "SELECT \n    dim_customers.segment,\n    SUM(fct_orders.net_revenue) AS total_net_revenue\nFROM \n    fct_orders\nJOIN \n    dim_customers ON fct_orders.customer_id = dim_customers.customer_id\nWHERE \n    fct_orders.status = 'completed'\nGROUP BY \n    dim_customers.segment\nORDER BY \n    total_net_revenue DESC;"
+      ],
+      "latency_s": 0.765,
+      "result_preview": [
+        [
+          "Consumer",
+          "7483.219999999997"
+        ],
+        [
+          "Corporate",
+          "6360.889999999999"
+        ],
+        [
+          "Home Office",
+          "2060.9700000000003"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q27",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What is the average revenue per order?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT AVG(net_revenue) AS avg_revenue_per_order\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.313,
+      "result_preview": [
+        [
+          "230.50840579710132"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q28",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue did we give up to discounts?",
+      "correct": false,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue * discount_pct) AS total_discounted_revenue\nFROM fct_orders\nWHERE status = 'completed';",
+      "sql_history": [
+        "SELECT SUM(net_revenue * discount_pct) AS total_discounted_revenue\nFROM fct_orders\nWHERE status = 'completed';"
+      ],
+      "latency_s": 0.328,
+      "result_preview": [
+        [
+          "1562.4465000000005"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q29",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "How much revenue was reversed by returns?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'returned';",
+      "sql_history": [
+        "SELECT SUM(net_revenue) AS total_reversed_revenue\nFROM fct_orders\nWHERE status = 'returned';"
+      ],
+      "latency_s": 0.313,
+      "result_preview": [
+        [
+          "1062.46"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q30",
+      "tags": [
+        "business_rule",
+        "ranking",
+        "time"
+      ],
+      "question": "Which product generated the most revenue in 2023?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.order_year = 2023 AND o.status = 'completed'\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;",
+      "sql_history": [
+        "SELECT \n    p.product_name,\n    SUM(o.net_revenue) AS total_revenue\nFROM \n    fct_orders o\nJOIN \n    dim_products p ON o.product_id = p.product_id\nWHERE \n    o.order_year = 2023 AND o.status = 'completed'\nGROUP BY \n    p.product_name\nORDER BY \n    total_revenue DESC\nLIMIT 1;"
+      ],
+      "latency_s": 0.781,
+      "result_preview": [
+        [
+          "Standing Desk",
+          "2399.96"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q31",
+      "tags": [
+        "business_rule",
+        "ranking"
+      ],
+      "question": "Which 3 states bring in the most revenue?",
+      "correct": true,
+      "executed": true,
+      "attempts": 1,
+      "repaired": false,
+      "error": null,
+      "sql": "SELECT \n    d.state,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.state\nORDER BY \n    total_revenue DESC\nLIMIT 3;",
+      "sql_history": [
+        "SELECT \n    d.state,\n    SUM(f.net_revenue) AS total_revenue\nFROM \n    fct_orders f\nJOIN \n    dim_customers d ON f.customer_id = d.customer_id\nWHERE \n    f.status = 'completed'\nGROUP BY \n    d.state\nORDER BY \n    total_revenue DESC\nLIMIT 3;"
+      ],
+      "latency_s": 0.672,
+      "result_preview": [
+        [
+          "TX",
+          "3970.2799999999997"
+        ],
+        [
+          "CA",
+          "3368.04"
+        ],
+        [
+          "PA",
+          "1578.1200000000001"
+        ]
+      ]
+    },
+    {
+      "repeat": 3,
+      "condition": "with_manifest",
+      "id": "q32",
+      "tags": [
+        "business_rule"
+      ],
+      "question": "What percentage of revenue comes from Corporate customers? Round to one decimal place.",
+      "correct": true,
+      "executed": true,
+      "attempts": 2,
+      "repaired": true,
+      "error": null,
+      "sql": "SELECT \n    ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM \n    dim_customers AS T1\nJOIN \n    fct_orders AS T2 ON T1.customer_id = T2.customer_id\nWHERE \n    T2.status = 'completed';",
+      "sql_history": [
+        "SELECT \n    ROUND(SUM(CASE WHEN T1.customer_segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM \n    dim_customers AS T1\nJOIN \n    fct_orders AS T2 ON T1.customer_id = T2.customer_id\nWHERE \n    T2.status = 'completed';",
+        "SELECT \n    ROUND(SUM(CASE WHEN T1.segment = 'Corporate' THEN T2.net_revenue ELSE 0 END) / SUM(T2.net_revenue) * 100, 1) AS corporate_revenue_percentage\nFROM \n    dim_customers AS T1\nJOIN \n    fct_orders AS T2 ON T1.customer_id = T2.customer_id\nWHERE \n    T2.status = 'completed';"
+      ],
+      "latency_s": 1.672,
+      "result_preview": [
+        [
+          "40.0"
+        ]
+      ]
+    }
+  ]
+}
