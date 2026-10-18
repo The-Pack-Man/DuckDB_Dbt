@@ -1,5 +1,7 @@
 # Text-to-SQL over a dbt Semantic Layer
 
+[![tests](https://github.com/The-Pack-Man/DuckDB_Dbt/actions/workflows/tests.yml/badge.svg)](https://github.com/The-Pack-Man/DuckDB_Dbt/actions/workflows/tests.yml)
+
 Ask a business question in plain English and get SQL, results, and an explanation. Everything runs locally on DuckDB and an Ollama model.
 
 ```bash
