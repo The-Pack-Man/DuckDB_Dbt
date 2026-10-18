@@ -44,15 +44,37 @@ metrics:
     method: pytest, 2026-10-17
     artifact: ""
     date: 2026-10-17
-  # Add schema_only vs with_manifest accuracy only after a run's JSON is committed under evals/results/.
+  - id: M2
+    name: Execution accuracy, schema only vs with semantic layer (32-question golden set)
+    value: "56.2% (18/32) -> 90.6% (29/32), +34.4 points"
+    status: measured
+    method: evals/run_eval.py, qwen2.5-coder:7b via Ollama, temperature 0, max 2 repairs, 3 repeats (identical)
+    artifact: evals/results/20261018T022611Z_qwen2.5-coder-7b.json
+    date: 2026-10-18
+  - id: M3
+    name: Execution accuracy on business-rule questions, schema only vs with semantic layer
+    value: "15.4% (2/13) -> 92.3% (12/13)"
+    status: measured
+    method: same run as M2, questions tagged business_rule
+    artifact: evals/results/20261018T022611Z_qwen2.5-coder-7b.json
+    date: 2026-10-18
+  - id: M4
+    name: Questions fixed vs broken by the semantic layer
+    value: "12 fixed, 1 broken (q15: completed-only rule over-applied to an order count)"
+    status: measured
+    method: same run as M2, per-question comparison
+    artifact: evals/results/20261018T022611Z_qwen2.5-coder-7b.json
+    date: 2026-10-18
 
 decisions:
   - Runs fully local on a 7B coder model, with no data leaving the machine.
   - The ablation treats the business rules as part of the semantic layer, so the baseline gets the schema only.
+  - Reported the regression the manifest introduced (q15) alongside its gains, rather than only the net lift.
   - Read-only connection is the safety boundary rather than parsing or allowlisting SQL.
 
 limitations:
-  - No model results committed yet. The eval needs a local Ollama run.
+  - Results are for one model (qwen2.5-coder 7B). The lift may differ for larger models.
+  - Remaining failures with the manifest - an over-applied revenue rule (q15), an anti-join error (q17), and an undefined discount-amount metric (q28).
   - The golden set is small (32) and written by the manifest's author, so the lift may be optimistic.
   - Small synthetic dataset (20 customers, 15 products, 80 order lines).
 ---

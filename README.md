@@ -89,7 +89,32 @@ Each run prints accuracy per condition and per tag, and writes `evals/results/<t
 
 Defaults: temperature 0 and 2 repair attempts, the same loop the CLI uses.
 
-**Results:** none committed yet. Run the eval and commit the JSON before citing numbers.
+### Results
+
+qwen2.5-coder 7B via Ollama, temperature 0, up to 2 repair attempts, 3 identical repeats ([`evals/results/20261018T022611Z_qwen2.5-coder-7b.json`](evals/results/20261018T022611Z_qwen2.5-coder-7b.json)):
+
+| | schema_only | with_manifest |
+|---|---:|---:|
+| **Overall** | **56.2%** (18/32) | **90.6%** (29/32) |
+| business_rule | 15.4% (2/13) | 92.3% (12/13) |
+| basic | 84.6% (11/13) | 100% (13/13) |
+| ranking | 71.4% (5/7) | 100% (7/7) |
+| time | 71.4% (5/7) | 85.7% (6/7) |
+| join | 50.0% (1/2) | 50.0% (1/2) |
+
+All generated SQL executed. The repair loop was needed once per condition. Tags overlap, so tag counts don't sum to 32.
+
+**Manifest lift: +34.4 points.** The manifest fixed 12 questions and broke 1. Most of the gain is on business-rule questions, where the schema alone doesn't say that "revenue" means net revenue on completed orders.
+
+The three remaining failures with the manifest:
+
+| Question | What went wrong | Cause |
+|---|---|---|
+| q15 Orders per month in 2023 | Added `status = 'completed'` to an order count | **Regression from the manifest**: the revenue rule was over-applied (correct without the manifest) |
+| q17 Products never returned | `JOIN … WHERE status != 'returned'` instead of an anti-join | SQL reasoning error, fails in both conditions |
+| q28 Revenue given up to discounts | `SUM(net_revenue * discount_pct)` instead of `gross − net` | Manifest gap: discount amount is not defined |
+
+At temperature 0 the three repeats were identical, so the ± 0.0% shows the run is reproducible. It is not a measure of variance.
 
 Tests: `pip install pytest && pytest`. They cover the comparator, the repair loop, the 100% self-check, and a check that ignoring the completed-orders rule gets scored wrong.
 
