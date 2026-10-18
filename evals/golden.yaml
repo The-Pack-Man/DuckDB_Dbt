@@ -1,0 +1,244 @@
+# Golden question set for text-to-SQL evaluation.
+#
+# Each question has a reference SQL query. A prediction is correct when its
+# result matches the reference result (see evals/compare.py): row order is
+# ignored unless order_matters is true, and extra columns are allowed as long
+# as every reference column is present. A question may list `accept` queries
+# for other legitimate answer shapes (IDs instead of names, month numbers).
+#
+# Tags:
+#   basic          - answerable from the schema alone
+#   join           - needs a join or anti-join
+#   time           - needs date filtering or bucketing
+#   ranking        - top-N / argmax
+#   business_rule  - needs a definition the schema doesn't state, which the
+#                    semantic layer provides (e.g. "revenue" = net revenue of
+#                    completed orders; "returned" = revenue reversed)
+#
+# Reference conventions: revenue = SUM(net_revenue) over status = 'completed',
+# money rounded to 2 decimals.
+
+questions:
+  - id: q01
+    question: How many customers do we have?
+    tags: [basic]
+    sql: SELECT COUNT(*) FROM dim_customers
+
+  - id: q02
+    question: How many products are in the catalog?
+    tags: [basic]
+    sql: SELECT COUNT(*) FROM dim_products
+
+  - id: q03
+    question: How many order lines are there in total, across all statuses?
+    tags: [basic]
+    sql: SELECT COUNT(*) FROM fct_orders
+
+  - id: q04
+    question: How many customers are in each segment?
+    tags: [basic]
+    sql: SELECT segment, COUNT(*) FROM dim_customers GROUP BY segment
+
+  - id: q05
+    question: How many products are in each category?
+    tags: [basic]
+    sql: SELECT category, COUNT(*) FROM dim_products GROUP BY category
+
+  - id: q06
+    question: How many orders are there in each status?
+    tags: [basic]
+    sql: SELECT status, COUNT(*) FROM fct_orders GROUP BY status
+
+  - id: q07
+    question: Which state has the most customers?
+    tags: [basic, ranking]
+    sql: SELECT state FROM dim_customers GROUP BY state ORDER BY COUNT(*) DESC LIMIT 1
+
+  - id: q08
+    question: How many orders were returned or cancelled?
+    tags: [basic]
+    sql: SELECT COUNT(*) FROM fct_orders WHERE status IN ('returned', 'cancelled')
+
+  - id: q09
+    question: What is the average list price of products in each category?
+    tags: [basic]
+    sql: SELECT category, ROUND(AVG(list_price), 2) FROM dim_products GROUP BY category
+
+  - id: q10
+    question: Which product has the highest margin percentage?
+    tags: [basic, ranking]
+    sql: SELECT product_name FROM dim_products ORDER BY margin_pct DESC LIMIT 1
+
+  - id: q11
+    question: What is the average discount on orders for each customer segment, across all orders?
+    tags: [basic]
+    sql: SELECT customer_segment, ROUND(AVG(discount_pct), 4) FROM fct_orders GROUP BY customer_segment
+    accept:  # the same answer expressed as a percentage
+      - SELECT customer_segment, ROUND(100 * AVG(discount_pct), 2) FROM fct_orders GROUP BY customer_segment
+    tolerance: 0.0051
+
+  - id: q12
+    question: How many units were ordered in each product category, counting all orders?
+    tags: [basic]
+    sql: SELECT product_category, SUM(quantity) FROM fct_orders GROUP BY product_category
+
+  - id: q13
+    question: How many orders were placed in 2024?
+    tags: [time]
+    sql: SELECT COUNT(*) FROM fct_orders WHERE order_year = 2024
+
+  - id: q14
+    question: How many customers signed up in 2023?
+    tags: [time]
+    sql: SELECT COUNT(*) FROM dim_customers WHERE date_part('year', signup_date) = 2023
+
+  - id: q15
+    question: How many orders were placed in each month of 2023?
+    tags: [time]
+    sql: >
+      SELECT date_trunc('month', order_date) AS month, COUNT(*)
+      FROM fct_orders WHERE order_year = 2023 GROUP BY 1
+    accept:  # month as a number or as YYYY-MM text
+      - SELECT month(order_date), COUNT(*) FROM fct_orders WHERE order_year = 2023 GROUP BY 1
+      - SELECT strftime(order_date, '%Y-%m'), COUNT(*) FROM fct_orders WHERE order_year = 2023 GROUP BY 1
+
+  - id: q16
+    question: Which customers placed no orders in 2023?
+    tags: [join, time]
+    sql: >
+      SELECT c.full_name FROM dim_customers c
+      WHERE NOT EXISTS (SELECT 1 FROM fct_orders o
+                        WHERE o.customer_id = c.customer_id AND o.order_year = 2023)
+    accept:
+      - >
+        SELECT c.customer_id FROM dim_customers c
+        WHERE NOT EXISTS (SELECT 1 FROM fct_orders o
+                          WHERE o.customer_id = c.customer_id AND o.order_year = 2023)
+
+  - id: q17
+    question: Which products have never been returned?
+    tags: [join]
+    sql: >
+      SELECT p.product_name FROM dim_products p
+      WHERE NOT EXISTS (SELECT 1 FROM fct_orders o
+                        WHERE o.product_id = p.product_id AND o.status = 'returned')
+    accept:
+      - >
+        SELECT p.product_id FROM dim_products p
+        WHERE NOT EXISTS (SELECT 1 FROM fct_orders o
+                          WHERE o.product_id = p.product_id AND o.status = 'returned')
+
+  - id: q18
+    question: How many different customers have at least one completed order?
+    tags: [basic]
+    sql: SELECT COUNT(DISTINCT customer_id) FROM fct_orders WHERE status = 'completed'
+
+  - id: q19
+    question: Which customer has placed the most orders, counting all statuses?
+    tags: [ranking]
+    sql: >
+      SELECT customer_name FROM fct_orders GROUP BY customer_name
+      ORDER BY COUNT(*) DESC LIMIT 1
+    accept:
+      - SELECT customer_id FROM fct_orders GROUP BY customer_id ORDER BY COUNT(*) DESC LIMIT 1
+
+  # ── Business-rule questions: the definition comes from the semantic layer ──
+
+  - id: q20
+    question: What is our total revenue?
+    tags: [business_rule]
+    sql: SELECT ROUND(SUM(net_revenue), 2) FROM fct_orders WHERE status = 'completed'
+
+  - id: q21
+    question: What is total revenue by product category?
+    tags: [business_rule]
+    sql: >
+      SELECT product_category, ROUND(SUM(net_revenue), 2)
+      FROM fct_orders WHERE status = 'completed' GROUP BY product_category
+
+  - id: q22
+    question: Which product category generates the most revenue?
+    tags: [business_rule, ranking]
+    sql: >
+      SELECT product_category FROM fct_orders WHERE status = 'completed'
+      GROUP BY product_category ORDER BY SUM(net_revenue) DESC LIMIT 1
+
+  - id: q23
+    question: What was our revenue in 2024?
+    tags: [business_rule, time]
+    sql: >
+      SELECT ROUND(SUM(net_revenue), 2) FROM fct_orders
+      WHERE status = 'completed' AND order_year = 2024
+
+  - id: q24
+    question: What was revenue by month in 2024?
+    tags: [business_rule, time]
+    sql: >
+      SELECT order_month, ROUND(SUM(net_revenue), 2) FROM fct_orders
+      WHERE status = 'completed' AND order_year = 2024 GROUP BY order_month
+    accept:
+      - >
+        SELECT month(order_date), ROUND(SUM(net_revenue), 2) FROM fct_orders
+        WHERE status = 'completed' AND order_year = 2024 GROUP BY 1
+      - >
+        SELECT strftime(order_date, '%Y-%m'), ROUND(SUM(net_revenue), 2) FROM fct_orders
+        WHERE status = 'completed' AND order_year = 2024 GROUP BY 1
+
+  - id: q25
+    question: Who are our top 5 customers by revenue?
+    tags: [business_rule, ranking]
+    order_matters: true
+    sql: >
+      SELECT customer_name FROM fct_orders WHERE status = 'completed'
+      GROUP BY customer_name ORDER BY SUM(net_revenue) DESC LIMIT 5
+    accept:
+      - >
+        SELECT customer_id FROM fct_orders WHERE status = 'completed'
+        GROUP BY customer_id ORDER BY SUM(net_revenue) DESC LIMIT 5
+
+  - id: q26
+    question: What is revenue by customer segment?
+    tags: [business_rule]
+    sql: >
+      SELECT customer_segment, ROUND(SUM(net_revenue), 2) FROM fct_orders
+      WHERE status = 'completed' GROUP BY customer_segment
+
+  - id: q27
+    question: What is the average revenue per order?
+    tags: [business_rule]
+    sql: SELECT ROUND(AVG(net_revenue), 2) FROM fct_orders WHERE status = 'completed'
+
+  - id: q28
+    question: How much revenue did we give up to discounts?
+    tags: [business_rule]
+    sql: >
+      SELECT ROUND(SUM(gross_revenue - net_revenue), 2) FROM fct_orders
+      WHERE status = 'completed'
+
+  - id: q29
+    question: How much revenue was reversed by returns?
+    tags: [business_rule]
+    sql: SELECT ROUND(SUM(net_revenue), 2) FROM fct_orders WHERE status = 'returned'
+
+  - id: q30
+    question: Which product generated the most revenue in 2023?
+    tags: [business_rule, ranking, time]
+    sql: >
+      SELECT product_name FROM fct_orders WHERE status = 'completed' AND order_year = 2023
+      GROUP BY product_name ORDER BY SUM(net_revenue) DESC LIMIT 1
+
+  - id: q31
+    question: Which 3 states bring in the most revenue?
+    tags: [business_rule, ranking]
+    sql: >
+      SELECT customer_state FROM fct_orders WHERE status = 'completed'
+      GROUP BY customer_state ORDER BY SUM(net_revenue) DESC LIMIT 3
+
+  - id: q32
+    question: What percentage of revenue comes from Corporate customers? Round to one decimal place.
+    tags: [business_rule]
+    tolerance: 0.051
+    sql: >
+      SELECT ROUND(100.0 * SUM(net_revenue) FILTER (WHERE customer_segment = 'Corporate')
+                   / SUM(net_revenue), 1)
+      FROM fct_orders WHERE status = 'completed'

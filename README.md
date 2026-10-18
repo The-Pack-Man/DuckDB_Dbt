@@ -48,6 +48,8 @@ python cli.py --max-retries 3 --max-rows 20 "Average discount by product categor
 | Flag | Default | Purpose |
 |---|---|---|
 | `--no-explain` | off | Skip the plain-English explanation |
+| `--no-manifest` | off | Schema only: drop the semantic manifest and business rules |
+| `--hide-sql` | off | Don't print the generated SQL |
 | `--max-retries` | 2 | Fix attempts after a SQL error |
 | `--max-rows` | 50 | Rows to display |
 
@@ -59,11 +61,48 @@ python cli.py --max-retries 3 --max-rows 20 "Average discount by product categor
 | `OLLAMA_MODEL` | `qwen2.5-coder:7b` |
 | `DUCKDB_PATH` | `dev.duckdb` |
 
+## Evaluation: does the semantic layer help?
+
+`evals/` measures **execution accuracy**: whether the generated SQL returns the same result as a reference query. It runs a golden set of 32 questions under two conditions:
+
+| Condition | Model sees |
+|---|---|
+| `schema_only` | live schema + generic SQL rules |
+| `with_manifest` | schema + semantic manifest + business rules (what `cli.py` ships) |
+
+The difference between the two is the **manifest lift**, the accuracy the semantic layer adds. Questions are tagged (`basic`, `join`, `time`, `ranking`, `business_rule`) so you can see where the lift comes from. The 13 `business_rule` questions need definitions that the schema doesn't state, such as "revenue" meaning net revenue on completed orders. Those are where the manifest should matter most.
+
+```bash
+python evals/run_eval.py                                  # model from .env
+python evals/run_eval.py --model qwen2.5-coder:14b --repeats 3
+python evals/run_eval.py --generator reference            # harness self-check: must be 100%
+```
+
+Each run prints accuracy per condition and per tag, and writes `evals/results/<timestamp>_<model>.json` with every question's SQL, result preview, retries, and latency.
+
+**How answers are scored** (`evals/compare.py`):
+- Row order is ignored unless the question requires it, as with "top 5".
+- Extra columns are fine, but every reference column must be present.
+- Numbers match within 0.01 by default.
+- Dates match midnight timestamps.
+- Some questions list alternative accepted answers, such as IDs instead of names or month numbers instead of dates.
+
+Defaults: temperature 0 and 2 repair attempts, the same loop the CLI uses.
+
+**Results:** none committed yet. Run the eval and commit the JSON before citing numbers.
+
+Tests: `pip install pytest && pytest`. They cover the comparator, the repair loop, the 100% self-check, and a check that ignoring the completed-orders rule gets scored wrong.
+
 ## Project layout
 
 ```
-cli.py                   # question → prompt → SQL → execute/repair → explain
+cli.py                   # command-line interface
+text2sql.py              # pipeline: prompt → SQL → execute/repair (shared with evals)
 semantic_manifest.yaml   # business-meaning layer for the model
+evals/golden.yaml        # 32 questions with reference SQL
+evals/run_eval.py        # execution-accuracy harness, manifest ablation
+evals/compare.py         # result-set comparison
+tests/                   # pytest suite
 models/staging/          # dbt staging models
 models/marts/            # dbt fact and dimension models
 seeds/                   # source CSVs
@@ -71,5 +110,5 @@ seeds/                   # source CSVs
 
 ## Limitations
 
-- There is no accuracy evaluation yet. Planned: a golden question set scored on execution accuracy, with and without the semantic manifest.
+- The golden set is small (32 questions) and was written by the same author as the manifest, so it may favor the manifest's phrasing. Treat the lift as directional.
 - The seed dataset is small and synthetic.
