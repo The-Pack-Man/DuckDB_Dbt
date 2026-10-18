@@ -9,6 +9,8 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: requirements-analytics.txt
       - run: pip install -r requirements-analytics.txt pytest
-      # Scoring logic and golden-set checks; no model needed.
+      # Build the warehouse so the reference-generator tests run too; no model needed.
+      - run: dbt seed --profiles-dir . && dbt run --profiles-dir .
       - run: pytest -q
